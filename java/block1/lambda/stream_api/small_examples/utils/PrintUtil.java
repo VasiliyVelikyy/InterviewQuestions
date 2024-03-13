@@ -1,8 +1,8 @@
-package block1.lambda.stream_api.utils;
+package block1.lambda.stream_api.small_examples.utils;
 
-import block1.lambda.stream_api.example1.EmailAddress;
-import block1.lambda.stream_api.example1.Reader;
-import block1.lambda.stream_api.example2_grouping.Worker;
+import block1.lambda.stream_api.small_examples.example1.EmailAddress;
+import block1.lambda.stream_api.small_examples.example1.Reader;
+import block1.lambda.stream_api.small_examples.example2_grouping.Worker;
 
 import java.util.List;
 import java.util.Map;

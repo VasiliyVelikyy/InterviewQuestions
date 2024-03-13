@@ -1,4 +1,4 @@
-package block1.lambda.stream_api.example1;
+package block1.lambda.stream_api.small_examples.example1;
 
 public class EmailAddress {
     private String email; //электронный адрес

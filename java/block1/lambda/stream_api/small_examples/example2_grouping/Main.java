@@ -1,6 +1,6 @@
-package block1.lambda.stream_api.example2_grouping;
+package block1.lambda.stream_api.small_examples.example2_grouping;
 
-import block1.lambda.stream_api.utils.PrintUtil;
+import block1.lambda.stream_api.small_examples.utils.PrintUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;

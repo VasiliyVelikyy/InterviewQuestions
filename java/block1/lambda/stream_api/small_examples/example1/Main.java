@@ -1,6 +1,6 @@
-package block1.lambda.stream_api.example1;
+package block1.lambda.stream_api.small_examples.example1;
 
-import block1.lambda.stream_api.utils.PrintUtil;
+import block1.lambda.stream_api.small_examples.utils.PrintUtil;
 
 import java.util.List;
 import java.util.Map;

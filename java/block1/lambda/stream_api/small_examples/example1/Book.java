@@ -1,4 +1,4 @@
-package block1.lambda.stream_api.example1;
+package block1.lambda.stream_api.small_examples.example1;
 
 import java.util.Objects;
 
