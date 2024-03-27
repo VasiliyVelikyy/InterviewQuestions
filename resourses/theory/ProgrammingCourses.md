@@ -1,5 +1,5 @@
 # Курс по информатике 
-* https://openlearninglibrary.mit.edu/courses/course-v1:MITx+6.005.1x+3T2016/course/
+* https://openlearninglibrary.mit.edu/sandbox.courses/course-v1:MITx+6.005.1x+3T2016/course/
 
 
 # Java курсы
@@ -9,6 +9,9 @@
    
    - [ ] Разработка веб сервиса на java 
    <https://stepik.org/course/146/promo?search=3235055949>
+   
+   - [ ] Java. Functional programming
+   <https://stepik.org/course/1595/syllabus>
 
    * Др Универы
    - [ ]  Курс от Стендфорского университета по java
@@ -36,7 +39,7 @@
     <https://www.coursesbag.com/android-app-development-in-10-hours-bootcamp-android-13/>
     
    - [ ] Kotlin Bootcamp для разработчиков
-   <https://developer.android.com/courses/kotlin-bootcamp/overview>
+   <https://developer.android.com/sandbox.courses/kotlin-bootcamp/overview>
    
    - [ ] Kotlin с нуля – бесплатный курс по основам программирования
    <https://www.youtube.com/playlist?list=PLgPRahgE-Gcu4s-I9mrHUrKUp9dY6QcJC>
