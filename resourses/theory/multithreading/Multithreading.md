@@ -28,3 +28,4 @@ ExecutorService помогает организовать выполнение �
 > https://habr.com/ru/articles/260953/    
 > https://habr.com/ru/articles/116363/  
 > https://habr.com/ru/articles/554608/
+> https://javarush.com/quests/lectures/jru.module2.lecture18
