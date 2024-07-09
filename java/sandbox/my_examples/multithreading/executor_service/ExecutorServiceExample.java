@@ -30,5 +30,10 @@ public class ExecutorServiceExample {
 
         System.out.println("after 10 increment not volatile counter= " + counter);
         System.out.println("after 10 increment  volatile counter= " + volCounter);
+
+
+
     }
+
+
 }
