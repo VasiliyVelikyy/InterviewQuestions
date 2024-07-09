@@ -25,6 +25,6 @@ ExecutorService – это мощный инструмент для управл
 ```
 ExecutorService помогает организовать выполнение задач в пуле потоков, управлять этими потоками и обрабатывать результаты выполнения задач.
 
->>>https://habr.com/ru/articles/260953/
->>>https://habr.com/ru/articles/116363/
->>>https://habr.com/ru/articles/554608/
+> https://habr.com/ru/articles/260953/    
+> https://habr.com/ru/articles/116363/  
+> https://habr.com/ru/articles/554608/
