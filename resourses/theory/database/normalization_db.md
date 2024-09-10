@@ -240,6 +240,7 @@ StudentId составляет первичный ключ. Хотя в прин
 
 Согласно второй форме, атрибуты first_name и last_name необходимо вынести в свою таблицу, которая будет отвечать за
 пользователей:
+
 ![Normalization_example5.png](../../picture/normaliztionbd/Normalization_example5.png)
 
 В этой таблице всего три записи, потому что у нас три уникальных пользователя. Каждому из этих пользователей
@@ -253,8 +254,11 @@ StudentId составляет первичный ключ. Хотя в прин
 называется внешним или вторичным ключом.
 
 Такую же операцию нужно произвести и с товаром. Вынесем item в свою таблицу:
+
 ![goods.png](../../picture/normaliztionbd/goods.png)
+
 Теперь свяжем эти данные с таблицей order_items:
+
 ![Normalization_example7.png](../../picture/normaliztionbd/Normalization_example7.png)
 
 Внешний ключ — это не ссылка. Таблицы существуют сами по себе, и во внешнем ключе указывается конкретное значение,
@@ -360,9 +364,8 @@ CourseId, можно сказать, как называется курс, ка�
 Таким образом, база данных перешла во вторую нормальную форму.
 
 ## Ссылки
-
-<https://ru.hexlet.io/courses/rdb-basics/lessons/1nf/theory_unit>
-<https://ru.hexlet.io/courses/rdb-basics/lessons/2nf/theory_unit>
-<https://metanit.com/sql/tutorial/2.2.php>
-<https://metanit.com/sql/tutorial/2.3.php>
-<https://metanit.com/sql/tutorial/2.4.php>
+- <https://ru.hexlet.io/courses/rdb-basics/lessons/1nf/theory_unit>
+- <https://ru.hexlet.io/courses/rdb-basics/lessons/2nf/theory_unit>
+- <https://metanit.com/sql/tutorial/2.2.php>
+- <https://metanit.com/sql/tutorial/2.3.php>
+- <https://metanit.com/sql/tutorial/2.4.php>
