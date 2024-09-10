@@ -116,7 +116,7 @@
 - [x] Использование INNER JOIN вместо подзапроса
 - [ ] Увеличение размера памяти сервера базы данных
 - [ ] Изменение типа данных столбца CustomerID
-    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/549cf740d6df577717365fd41e3040914474b311/resourses/theory/database/db.md)
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
 
 * Какой тип JOIN в SQL используется для возвращения всех строк из левой таблицы и сопоставленных строк из правой
   таблицы?
@@ -140,8 +140,8 @@
 - [ ] Первичный ключ используется только для индексации, в то время как составной ключ используется для шифрования
   данных.
 - [ ] Первичный ключ и составной ключ функционально идентичны и отличаются только названием.
-    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/549cf740d6df577717365fd41e3040914474b311/resourses/theory/database/db.md)
-  
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
+
 * Какой компонент ACID обеспечивает, что транзакция либо полностью выполнится, либо не выполнится вообще?
 
 - [x] Atomicity (Атомарность)
@@ -155,7 +155,7 @@
 - [x] Вторая нормальная форма (2NF)
 - [ ] Третья нормальная форма (3NF)
 - [ ] Нормальная форма Бойса-Кодда (BCNF)
-    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/a1bfc5f966a325e43213e4a353bbd13e6a4c27d2/resourses/theory/database/normalization_db.md)
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/normalization_db.md)
 
 * Какой метод миграции данных наиболее подходит для больших объемов данных с минимальным временем простоя?
 
@@ -163,11 +163,43 @@
 - [ ] Использование ETL-процессов (Извлечение, Трансформация, Загрузка)
 - [ ] Прямое копирование файлов базы данных
 - [ ] Построчное копирование данных
-    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/549cf740d6df577717365fd41e3040914474b311/resourses/theory/database/db.md)
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
 
 * Какой шаг является критически важным после завершения миграции данных?
 
 - [ ] Повторное использование старой базы данных для других задач
 - [ ] Немедленное удаление исходных данных для освобождения места
-- [ ] Проведение тестирования целостности и точности мигрированных данных
-  - [ ]Увеличение объема хранилища для мигрированных данных
+- [x] Проведение тестирования целостности и точности мигрированных данных
+- [ ] Увеличение объема хранилища для мигрированных данных
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
+
+* Какой принцип SOLID подразумевает, что классы должны быть открыты для расширения, но закрыты для модификации?
+
+- [ ] Single Responsibility Principle
+- [x] Open/Closed Principle
+- [ ] Liskov Substitution Principle
+- [ ] Dependency Inversion Principle
+
+* Какой принцип SOLID утверждает, что объекты в программе можно заменить их наследниками без изменения правильности
+  программы?
+
+- [ ] Single Responsibility Principle
+- [ ] Interface Segregation Principle
+- [x] Liskov Substitution Principle
+- [ ] Dependency Inversion Principle
+
+* Какой компонент микросервисной архитектуры отвечает за маршрутизацию запросов клиента к соответствующему сервису?
+
+- [ ] Service Mesh
+- [x] API Gateway
+- [ ] Config Server
+- [ ] Service Registry
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
+
+* Какой паттерн позволяет микросервисам динамически обнаруживать и взаимодействовать друг с другом?
+
+- [ ] Service Mesh
+- [ ] API Gateway
+- [x] Service Discovery
+- [ ] Circuit Breaker
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
