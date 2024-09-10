@@ -194,7 +194,7 @@
 - [x] API Gateway
 - [ ] Config Server
 - [ ] Service Registry
-  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/patterns/softwarePatterns.md)
 
 * Какой паттерн позволяет микросервисам динамически обнаруживать и взаимодействовать друг с другом?
 
@@ -202,4 +202,13 @@
 - [ ] API Gateway
 - [x] Service Discovery
 - [ ] Circuit Breaker
-  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/db.md)
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/patterns/softwarePatterns.md)
+
+* Какой паттерн проектирования GoF позволяет создавать объекты, не специфицируя точные классы объектов, которые будут
+  созданы?
+
+- [ ] Адаптер
+- [ ] Строитель
+- [x] Фабричный метод
+- [ ] Одиночка
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/patterns/softwarePatterns.md)
