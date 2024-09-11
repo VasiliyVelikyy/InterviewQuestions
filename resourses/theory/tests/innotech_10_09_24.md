@@ -227,6 +227,7 @@
 - [x] Клиент отправляет запрос и блокируется до получения ответа от сервера
 - [ ] Взаимодействие происходит без использования HTTP протокола
 - [ ] Ответы сервера передаются без предварительных запросов от клиента
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
 
 * Какой файл используется для определения окружения и инструкций для создания образа Docker?
 
@@ -234,6 +235,7 @@
 - [ ] docker-compose.yml
 - [ ] Dockerimage.txt
 - [ ] Dockerconfig.ini
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
 
 * Какая команда Docker используется для запуска контейнера из образа?
 
@@ -241,10 +243,110 @@
 - [x] docker run
 - [ ] docker pull
 - [ ] docker create
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
 
 * Какая инструкция в Dockerfile используется для копирования файлов из локальной файловой системы в образ?
 
-- [ ] COPY
+- [x] COPY
 - [ ] ADD
 - [ ] PASTE
 - [ ] MOVE
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Какое преимущество предоставляет многоступенчатая сборка в Dockerfile?
+
+- [x] Уменьшает размер конечного образа, удаляя ненужные зависимости
+- [ ] Автоматически обновляет образ при изменении исходного кода
+- [ ] Увеличивает скорость сборки образа за счет кэширования
+- [ ] Добавляет дополнительный уровень безопасности путем изоляции стадий сборки
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Как в docker-compose.yml файле обозначается сервис, который должен быть создан?
+
+- [x] Под ключом services
+- [ ] Под ключом containers
+- [ ] Под ключом applications
+- [ ] Под ключом components
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Как в docker-compose.yml указать, что один сервис зависит от другого и должен быть запущен после него?
+
+- [ ] Используя ключ links
+- [x] Используя ключ depends_on
+- [ ] Используя ключ after
+- [ ] Используя ключ before
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* При подготовке Dockerfile для развертывания в Kubernetes, какую практику следует применять для обеспечения
+  безопасности?
+
+- [ ] Запускать приложение от пользователя root
+- [ ] Использовать многоступенчатую сборку для уменьшения размера образа
+- [ ] Задавать статические IP-адреса для контейнеров
+- [x] Использовать непривилегированного пользователя для запуска приложения
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Какую особенность следует учитывать при подготовке Dockerfile для совместимости с OpenShift?
+
+- [ ] OpenShift требует, чтобы все образы были основаны на образах Red Hat
+- [ ] Приложения должны слушать только порт 80
+- [x] Образы должны поддерживать запуск от произвольного пользователя
+- [ ] Все внешние зависимости должны быть упакованы внутрь образа
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Какой компонент в архитектуре Kubernetes отвечает за распределение и управление сетевым трафиком между контейнерами?
+
+- [ ] Kubelet
+- [x] Kube-proxy
+- [ ] API Server
+- [ ] Scheduler
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Что такое внедрение зависимостей (Dependency Injection) в Spring Framework?
+
+- [ ] Механизм, позволяющий разрешать зависимости между классами на этапе компиляции
+- [x] Способ передачи зависимостей в объекты во время выполнения приложения
+- [ ] Механизм, обеспечивающий безопасность взаимодействия между компонентами приложения
+- [ ] Техника, используемая для уменьшения размера и сложности исходного кода
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/spring/spring.md)
+
+* Чем OpenShift отличается от Kubernetes?
+
+- [ ] OpenShift не поддерживает контейнеры
+- [x] OpenShift предоставляет дополнительные функции управления, CI/CD и пользовательский интерфейс
+- [ ] OpenShift использует собственную систему оркестрации вместо Kubernetes
+- [ ] OpenShift поддерживает только контейнеры Docker, в то время как Kubernetes поддерживает любой тип контейнера
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Какая команда используется для создания Deployment в Kubernetes, который управляет группой одинаковых подов?
+
+- [x] kubectl create deployment <name> --image=<image>
+- [ ] kubectl create pod <name> --image=<image>
+- [ ] kubectl apply -f deployment.yaml
+- [ ] kubectl set deployment <name> --image=<image>
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Для чего в OpenShift используется объект Route и как его создать?
+
+- [ ] Route используется для внутренней маршрутизации между подами; создается с помощью oc create route internal
+  --service=<service-name>
+- [ ] Route используется для определения политик безопасности; создается с помощью oc create policy <name>
+- [x] Route обеспечивает внешний доступ к сервисам; создается с помощью oc expose service <service-name>
+- [ ] Route управляет хранилищами данных; создается с помощью oc set storage <storage-name>
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* Что такое Ingress в контексте Kubernetes?
+
+- [ ] Механизм для внутренней балансировки нагрузки между подами
+- [ ] Политика безопасности для контроля входящего трафика
+- [ ] API объект для управления входящим внешним доступом к сервисам в кластере
+- [ ] Инструмент для автоматического развертывания контейнеров
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
+
+* В контексте микросервисной архитектуры и Kubernetes, какая стратегия лучше описывает подход, при котором микросервисы взаимодействуют напрямую друг с другом без централизованного управления?
+
+- [ ] Оркестровка
+- [x] Хореография
+- [ ] Синхронизация
+- [ ] Агрегация
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/docker/docker.md)
