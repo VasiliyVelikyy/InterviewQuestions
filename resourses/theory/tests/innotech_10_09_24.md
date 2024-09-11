@@ -475,11 +475,14 @@
 
 * Что представляет собой Feign Client в Spring Cloud и какие основные настройки доступны для его конфигурации?
 
-- [ ] Feign Client - это инструмент для выполнения HTTP-запросов в микросервисных архитектурах, основанный на аннотациях, таких как @FeignClient
+- [ ] Feign Client - это инструмент для выполнения HTTP-запросов в микросервисных архитектурах, основанный на
+  аннотациях, таких как @FeignClient
 - [ ] Feign Client - это компонент Spring Cloud для обнаружения сервисов и автоматической настройки маршрутов
-- [x] Feign Client - это библиотека для взаимодействия с RESTful API в микросервисных системах, обеспечивающая декларативный подход к созданию HTTP-клиентов
-- [ ] Feign Client - это компонент Spring Cloud для автоматической генерации клиентских интерфейсов на основе Swagger-спецификации
-  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/spring/spring.md)
+- [x] Feign Client - это библиотека для взаимодействия с RESTful API в микросервисных системах, обеспечивающая
+  декларативный подход к созданию HTTP-клиентов
+- [ ] Feign Client - это компонент Spring Cloud для автоматической генерации клиентских интерфейсов на основе
+  Swagger-спецификации
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/spring/spring.md)
 
 * Какие основные настройки доступны для Feign Client в Spring Cloud?
 
@@ -493,7 +496,8 @@
 - [ ] Actuator - это компонент Spring Boot, предоставляющий возможность управления жизненным циклом приложения
 - [x] Actuator - это библиотека для мониторинга и управления приложением в реальном времени
 - [ ] Actuator - это инструмент для автоматического обнаружения и исправления ошибок в приложении
-- [ ] Actuator - это модуль Spring Boot, предоставляющий готовую конфигурацию для развертывания приложения на облачных платформах
+- [ ] Actuator - это модуль Spring Boot, предоставляющий готовую конфигурацию для развертывания приложения на облачных
+  платформах
 
 * Какие паттерны проектирования часто используются при разработке микросервисных приложений?
 
@@ -514,5 +518,36 @@
 
 - [ ] Методы findAll() и findByCriteria()
 - [ ] Использование аннотаций @Pageable и @Query
-- [ ] Методы findAll(Pageable pageable) и findAllByCriteria(Pageable pageable)
+- [x] Методы findAll(Pageable pageable) и findAllByCriteria(Pageable pageable)
 - [ ] Использование класса PageRequest и методов findPage()
+    + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/jpa.md)
+  
+* Какие способы описания составного ключа (composite key) в Entity существуют в JPA?
+
+- [x] Использование аннотации @EmbeddedId
+- [x] Определение отдельного класса для составного ключа и его аннотация @IdClass
+- [ ] Использование аннотации @CompositeId
+- [ ] Напрямую указание полей составного ключа с аннотацией @Id
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/jpa.md)
+
+* Какие существуют стратегии загрузки связанных Entity в JPA?
+
+- [x] Ленивая (Lazy) и энергичная (Eager)
+- [ ] Отложенная (Deferred) и немедленная (Immediate)
+- [ ] Односторонняя (One-sided) и двусторонняя (Two-sided)
+- [ ] Ручная (Manual) и автоматическая (Automatic)
+
+* Какие способы существуют для создания нативных SQL запросов в Spring Data JPA?
+
+- [ ] Использование аннотации @NativeQuery
+- [ ] Методы, именуемые с префиксом native, например, nativeQueryFindBy...()
+- [x] Аннотация @Query с nativeQuery=true
+- [ ] Использование класса NativeQuery из пакета javax.persistence
+  + [объяснение](https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/database/jpa.md)
+
+* В чем основные различия между RabbitMQ и Apache Kafka?
+
+- [x] RabbitMQ - это распределенная система обмена сообщениями, основанная на протоколе AMQP, в то время как Kafka - это распределенная система потоковых данных, основанная на журнале событий.
+- [ ] RabbitMQ - это база данных с открытым исходным кодом, а Kafka - это инструмент для развертывания виртуальных машин.
+- [ ] RabbitMQ обрабатывает только сообщения в реальном времени, в то время как Kafka может обрабатывать как сообщения в реальном времени, так и хранимые данные.
+- [ ] RabbitMQ используется для обмена сообщениями в микросервисных архитектурах, а Kafka - для обработки потоков данных в больших объемах.
