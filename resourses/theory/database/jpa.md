@@ -403,3 +403,4 @@ private List<Books> otmEntities = new ArrayList<Books>();
 ### Проблема n+1 в Hibernate
 
 <https://habr.com/ru/companies/otus/articles/529692/>
+<https://habr.com/ru/articles/714704/>
