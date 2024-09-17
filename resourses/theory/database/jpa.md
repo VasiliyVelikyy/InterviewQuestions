@@ -274,24 +274,28 @@ public class Release {
 * <https://sky.pro/wiki/sql/sozdanie-sostavnogo-pervichnogo-klyucha-v-jpa-primery-koda/>
 * <https://egorzimowski.com/2022/05/27/composite-primary-key-in-jpa//>
 
-
 ### Какие способы существуют для создания нативных SQL запросов в Spring Data JPA?
+
 Быстрый ответ
-Конечно, это вполне возможно. Для того чтобы использовать прямые SQL-запросы в Spring, можно применять аннотацию @Query с установленным параметром nativeQuery=true. Возьмем за пример следующий код:
+Конечно, это вполне возможно. Для того чтобы использовать прямые SQL-запросы в Spring, можно применять аннотацию @Query
+с установленным параметром nativeQuery=true. Возьмем за пример следующий код:
 
 ```Java
 public interface MyRepository extends JpaRepository<MyEntity, Long> {
 
-@Query(value = "SELECT * FROM my_table WHERE my_column = :value", nativeQuery = true)
-List<MyEntity> findByColumn(@Param("value") String value);
+    @Query(value = "SELECT * FROM my_table WHERE my_column = :value", nativeQuery = true)
+    List<MyEntity> findByColumn(@Param("value") String value);
 }
 ```
+
 И тут мы видим, что с помощью аннотации @Query выполнен нативный SQL-запрос.
 
 Верное использование инструментов: Сценарии применения чистого SQL
-Spring Data Repositories предлагает обширные возможности для выполнения стандартных операций. Но иногда возникают ситуации, когда требуется работать непосредственно с SQL.
+Spring Data Repositories предлагает обширные возможности для выполнения стандартных операций. Но иногда возникают
+ситуации, когда требуется работать непосредственно с SQL.
 
 #### Создание представлений: Использование проекций
+
 Для создания специальных представлений данных моделей применяются проекции:
 
 ```Java
@@ -299,26 +303,30 @@ public interface MyEntityProjection {
     String getMyColumn();
 }
 ```
+
 Проекция в репозитории используется следующим образом:
 
 ```Java
 public interface MyRepository extends JpaRepository<MyEntity, Long> {
 
-@Query(value = "SELECT my_column as myColumn FROM my_table", nativeQuery = true)
-List<MyEntityProjection> findProjectedBy();
+    @Query(value = "SELECT my_column as myColumn FROM my_table", nativeQuery = true)
+    List<MyEntityProjection> findProjectedBy();
 }
 ```
+
 Прямой доступ с EntityManager
 Если требуется более глубокий контроль, можно использовать EntityManager:
 
 ```Java
+
 @Autowired
 private EntityManager entityManager;
 
 public List<MyEntity> customQueryMethod() {
-return entityManager.createNativeQuery("SELECT * FROM my_table", MyEntity.class).getResultList();
+    return entityManager.createNativeQuery("SELECT * FROM my_table", MyEntity.class).getResultList();
 }
 ```
+
 Пользовательский вывод: Маппинг массивов и классов ответов
 Результаты SQL-запросов можно маппировать в массивы:
 
@@ -328,11 +336,12 @@ for(Object[] result : results){
 // Обработка результатов
 }
 ```
+
 Или может быть создан специальный класс для хранения результатов:
 
 ```Java
 public class CustomResponse {
-private String columnValue; // значение поля может быть любым
+    private String columnValue; // значение поля может быть любым
 
 // геттеры и сеттеры
 }
@@ -341,13 +350,16 @@ List<CustomResponse> customResponses = entityManager
         .createNativeQuery("SELECT my_column FROM my_table", CustomResponse.class)
         .getResultList();
 ```
+
 Безопасность превыше всего: Безопасность и принципы хорошей практики
 Очень важно обезопасить SQL-запросы, используя параметризацию:
 
 ```Java
+
 @Query(value = "SELECT * FROM my_table WHERE my_column = :value", nativeQuery = true)
 List<MyEntity> findByColumn(@Param("value") String value);
 ```
+
 Проверка пользовательского ввода
 Всегда защищайте себя от SQL-инъекций:
 
@@ -358,17 +370,36 @@ try {
 // Обработка исключения
 }
 ```
+
 Анализ производительности
 Не забывайте контролировать эффективность запросов:
 
 ```SQL
-    SELECT * FROM my_table WHERE my_column = :value LIMIT 10
+    SELECT *
+    FROM my_table
+    WHERE my_column = :value LIMIT 10
 ```
-
-
-
 
 * <https://sky.pro/wiki/java/ispolzovanie-raw-sql-v-spring-data-repository-rukovodstvo/>
 
+### Что такое в Hibernate FetchType.LAZY и FetchType.EAGER
 
+```Java
+import java.util.ArrayList;
 
+@OneToOne  // По умолчанию: fetch = FetchType.EAGER
+private RelatedEntity otoEntity;
+
+@ManyToOne // По умолчанию: fetch = FetchType.EAGER
+private RelatedEntity mtoEntity;
+
+@OneToMany // По умолчанию: fetch = FetchType.LAZY
+private Set<RelatedEntity> otmEntities;
+
+@ManyToMany(mappedBy = 'authors') // По умолчанию: fetch = FetchType.LAZY
+private List<Books> otmEntities = new ArrayList<Books>();
+```
+
+### Проблема n+1 в Hibernate
+
+<https://habr.com/ru/companies/otus/articles/529692/>
