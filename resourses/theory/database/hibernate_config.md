@@ -8,6 +8,10 @@
           auto: create
 ```
 
+spring.jpa.hibernate.ddl-auto This is actually a shortcut for the "hibernate.hbm2ddl.auto" property.
+For the record, the spring.jpa.hibernate.ddl-auto property is Spring Data JPA specific and is their way to specify a value that will eventually be passed to Hibernate under the property it knows, hibernate.hbm2ddl.auto.
+
+The values create, create-drop, validate, and update basically influence how the schema tool management will manipulate the database schema at startup.
 5.1 Автоматическое создание схемы данных
 При стартовом конфигурировании Hibernate можно включить очень много интересных настроек. Я не стал их приводить раньше,
 чтоб не распыляться. А вот в конце уровня думаю про некоторые из них все же рассказать.
@@ -49,7 +53,7 @@ logging.level.org.hibernate.type.descriptor.sql.BasicBinder=trace
 
 Например, log4jdbc или p6spy. Оба прокси рабочие и на них есть стартеры, хотя на log4jdbc давно не было коммитов на
 момент написания статьи.
-```xml
+``` xml
 <dependency>
     <groupId>com.integralblue</groupId>
     <artifactId>log4jdbc-spring-boot-starter</artifactId>

@@ -384,6 +384,25 @@ try {
 
 ### Что такое в Hibernate FetchType.LAZY и FetchType.EAGER
 
+* FetchType.LAZY
+  Когда используется LAZY, данные не извлекаются до тех пор, пока они действительно не понадобятся. Представьте себе
+  ситуацию, когда у вас есть приложение, которое работает с книгами и авторами. Каждый автор может написать несколько
+  книг. Но есть случаи, когда вам нужно получить информацию только об авторе, без деталей о его книгах. В этом случае
+  LAZY
+  подходит идеально, поскольку он позволяет избежать ненужного извлечения данных о книгах.
+
+* FetchType.EAGER
+  С другой стороны, EAGER загружает все данные сразу. Вернемся к примеру с книгами и авторами. Если каждый раз при
+  выборе
+  автора вам нужна информация о его книгах, использование EAGER будет более эффективным. Этот метод извлечения загружает
+  все связанные данные одновременно, что уменьшает количество запросов к базе данных.
+
+Однако использование EAGER может привести к проблемам производительности, если размер данных большой. Извлечение больших
+объемов данных может замедлить работу приложения.
+
+В зависимости от ситуации и требуемой производительности, можно выбирать между LAZY и EAGER. Основная идея состоит в
+том, чтобы получить данные, когда они действительно нужны, и избегать извлечения ненужных данных.
+
 ```Java
 import java.util.ArrayList;
 
@@ -400,7 +419,174 @@ private Set<RelatedEntity> otmEntities;
 private List<Books> otmEntities = new ArrayList<Books>();
 ```
 
+мой пример в тестовом проекте
+<https://github.com/VasiliyVelikyy/ExampleProject/blob/main/src/Info.md>
+
 ### Проблема n+1 в Hibernate
+
+мой пример в тестовом проекте
+<https://github.com/VasiliyVelikyy/ExampleProject/blob/main/src/Info.md>
+
+#### Ссылки на статьи
 
 <https://habr.com/ru/companies/otus/articles/529692/>
 <https://habr.com/ru/articles/714704/>
+
+### LazyInitializationException что за проблема.
+
+Ситуация, когда в процессе работы с Hibernate возникает ошибка «failed to lazily initialize a collection of role» —
+довольно распространённая проблема для начинающих разработчиков. Она обычно возникает при попытке обращения к лениво
+инициализированной коллекции (lazy collection) после закрытия Hibernate-сессии.
+
+В качестве примера можно привести ситуацию с классом Topic, который содержит коллекцию comments. Если попытаться
+получить комментарии после закрытия сессии, возникнет указанная ошибка.
+
+```java
+
+@Entity
+@Table(name = "T_TOPIC")
+public class Topic {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    // другие поля
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    private Collection<Comment> comments = new LinkedHashSet<Comment>();
+
+    // геттеры и сеттеры
+}
+```
+
+Основная причина возникновения этой ошибки — попытка загрузить данные, когда нет активной сессии Hibernate. Это
+происходит, когда используется ленивая инициализация (FetchType.LAZY), которая загружает данные только по запросу. Если
+сессия закрыта в момент запроса, Hibernate не сможет получить данные.
+
+```
+Topic topic = topicRepository.findById(id);
+session.close(); // сессия закрывается
+Collection<Comment> comments = topic.getComments(); // ошибка: сессия уже закрыта
+```
+
+#### Для решения этой проблемы можно использовать разные подходы.
+
+1) Использование EAGER-загрузки
+   Один из вариантов — использовать FetchType.EAGER вместо FetchType.LAZY. Это приведет к тому,
+   что все данные загружаются сразу, и никаких проблем при обращении к ним не возникнет.
+
+   ```java
+   
+   @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   private Collection<Comment> comments = new LinkedHashSet <Comment> ();
+   ```
+
+   Но этот подход не всегда оптимален, так как может привести к избыточной загрузке данных.
+
+
+2) Использование Open Session in View
+   Еще один подход — использование паттерна Open Session in View, который позволяет открывать сессию на начало обработки
+   запроса и закрывать ее только после завершения обработки.
+
+   Это можно сделать, например, с помощью фильтра OpenEntityManagerInViewFilter в Spring.
+
+   ```java
+   
+   @Bean
+   public FilterRegistrationBean<OpenEntityManagerInViewFilter> openEntityManagerInViewFilter() {
+       FilterRegistrationBean <OpenEntityManagerInViewFilter> registrationBean = new FilterRegistrationBean<>();
+       registrationBean.setFilter(new OpenEntityManagerInViewFilter());
+       registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+   
+       return registrationBean;
+   }
+   ```
+
+   Такой подход также имеет свои недостатки, в том числе возможность возникновения проблем с производительностью и
+   управлением транзакциями.
+3) Использование JOIN FETCH
+   Еще один способ обойти проблему — использовать JOIN FETCH в JPQL-запросе. Это позволит загрузить все необходимые
+   данные одним запросом.
+
+     ```sql
+     SELECT t FROM Topic t JOIN FETCH t.comments WHERE t.id = :id
+     ```
+
+   Этот подход позволяет более гибко управлять загрузкой данных, но может быть более сложным в реализации.
+
+   В заключение хочется отметить, что каждый из этих подходов имеет свои преимущества и недостатки, и выбор между ними
+   зависит от конкретной ситуации.
+4) Быстрый ответ
+   Для эффективности работы с ленивой загрузкой (FetchType.LAZY) в Hibernate используйте аннотацию @Transactional.
+   Взгляните на пример:
+
+    ```Java
+    @Transactional
+    public SomeEntity fetchWithLAZY(Long id) {
+        SomeEntity entity = repo.getById(id);
+        Hibernate.initialize(entity.getLAZYAssn());
+        return entity;
+    }
+    ```
+
+   С применением этого подхода, ленивые связи инициализируются во время активной сессии Hibernate, что предотвращает
+   появление исключения LazyInitializationException. Достаточно вызвать Hibernate.initialize() для требуемой ленивой
+   связи.
+
+Принципы работы FetchType.LAZY
+При работе с LAZY загрузкой в контроллере Spring следует учесть следующее:
+
+Использование соединений запросов
+JOIN FETCH в JPQL позволяет загрузить все необходимые объекты за один запрос, вместо индивидуальной загрузки каждой
+связи. Пример реализации в методе репозитория:
+
+```Java
+
+@Repository
+public interface SomeEntityRepository extends JpaRepository<SomeEntity, Long> {
+    @Query("SELECT e FROM SomeEntity e JOIN FETCH e.lazyRelation WHERE e.id = :id")
+    SomeEntity findByIdAndFetchLazyRelationEagerly(@Param("id") Long id);
+}
+```
+
+* Сервисный слой как регулятор сессии
+  Сервисный слой выполняет функцию посредника между контроллером и репозиторием, регулируя сессию Hibernate при работе с
+  отложенными коллекциями.
+
+Настройка загрузки с помощью @EntityGraph
+Аннотация @EntityGraph позволяет детально настроить стратегию загрузки прямо в методах репозитория:
+
+``` Java
+@EntityGraph(attributePaths = {"lazyRelation"})
+Optional<SomeEntity> findById(Long id);
+```
+
+Выбор между единичным JOIN FETCH и множественными запросами
+Тщательно рассмотрите использование JOIN FETCH и отдельных запросов, поскольку JOIN FETCH может привести к избыточной
+загрузке данных.
+
+Работа в рамках открытой транзакции с @Transactional
+Убедитесь, что вся загрузка осуществляется в рамках открытой транзакции, с помощью аннотации @Transactional, чтобы
+избежать LazyInitializationException.
+
+Активация прокси-объектов.
+Подумайте о возможности использования прокси-объектов для предотвращения ошибок при загрузке LAZY связей.
+
+* Ориентация на производительность.
+Загружайте LAZY данные только при необходимости, чтобы не повышать нагрузку на систему.
+
+Подробнее о FetchType.LAZY.
+Управление сессиями.
+Активная сессия Hibernate – ключ к успешной LAZY загрузке. OpenEntityManagerInViewFilter может помочь поддерживать
+сессию открытой в течение всего HTTP-запроса.
+
+Инициализация ленивой загрузки
+Вызов методов сервиса или использование метода .size() для коллекции может инициировать LAZY загрузку.
+
+Осмотрительное использование EAGER загрузки
+Осторожно используйте EAGER загрузку и соответствующие методы репозитория, чтобы избежать потери производительности и
+перерасхода памяти.
+
+Инструментарий репозитория.
+Рассмотрите возможность создания утилиты, такой как RepositoryHelper или использования JpaUtils для управления
+инициализацией сущностей, сохраняя ваш код аккуратным и легко поддерживаемым.
