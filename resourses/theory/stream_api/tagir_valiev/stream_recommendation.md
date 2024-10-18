@@ -93,3 +93,7 @@ Parallel не работает. Так как в reduce должны подав�
 Здесь forEachOrder гарантирует порядок элементов
 
 Любым способом
+Внешняя либа
+![pic33.png](../../../picture/stream/valiev/stream_recommendation/pic33.png)
+через дефолтные стримы
+![pic34.png](../../../picture/stream/valiev/stream_recommendation/pic34.png)
