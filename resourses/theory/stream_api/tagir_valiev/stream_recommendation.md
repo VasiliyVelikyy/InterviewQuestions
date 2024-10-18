@@ -1,3 +1,5 @@
+<https://www.youtube.com/watch?v=vxikpWnnnCU>
+
 ### Stream API: рекомендации лучших собаководов
 
 ![pic1.png](../../../picture/stream/valiev/stream_recommendation/pic1.png)
@@ -97,3 +99,23 @@ Parallel не работает. Так как в reduce должны подав�
 ![pic33.png](../../../picture/stream/valiev/stream_recommendation/pic33.png)
 через дефолтные стримы
 ![pic34.png](../../../picture/stream/valiev/stream_recommendation/pic34.png)
+Более изящное решение
+![pic35.png](../../../picture/stream/valiev/stream_recommendation/pic35.png)
+
+Не делайте так
+![pic36.png](../../../picture/stream/valiev/stream_recommendation/pic36.png)
+И так не делать
+![pic37.png](../../../picture/stream/valiev/stream_recommendation/pic37.png)
+
+Красивый коллектор
+![pic38.png](../../../picture/stream/valiev/stream_recommendation/pic38.png)
+![pic39.png](../../../picture/stream/valiev/stream_recommendation/pic39.png)
+![pic40.png](../../../picture/stream/valiev/stream_recommendation/pic40.png)
+Задача и решение со сторонней библиотекой
+![pic41.png](../../../picture/stream/valiev/stream_recommendation/pic41.png)
+Решение в stream
+![pic42.png](../../../picture/stream/valiev/stream_recommendation/pic42.png)
+Альтернативные библиотеки
+![pic43.png](../../../picture/stream/valiev/stream_recommendation/pic43.png)
+
+
