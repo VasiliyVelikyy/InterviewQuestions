@@ -62,3 +62,8 @@ select- здесь написан в качестве библиотеки по�
 ![pic18.png](../../../picture/stream/valiev/stream_recommendation/pic18.png)
 
 Терминальные операции
+![pic19.png](../../../picture/stream/valiev/stream_recommendation/pic19.png)
+
+![pic20.png](../../../picture/stream/valiev/stream_recommendation/pic20.png)
+Решение
+![pic21.png](../../../picture/stream/valiev/stream_recommendation/pic21.png)
