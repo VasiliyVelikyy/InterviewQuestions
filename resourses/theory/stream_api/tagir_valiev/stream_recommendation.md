@@ -1,21 +1,21 @@
 ### Stream API: рекомендации лучших собаководов
 
-![pic1.png](../../../picture/stream/pic1.png)
-![pic2.png](../../../picture/stream/pic2.png)
-![pic3.png](../../../picture/stream/pic3.png)
-![pic4.png](../../../picture/stream/pic4.png)
-![pic5.png](../../../picture/stream/pic5.png)
-![pic6.png](../../../picture/stream/pic6.png)
+![pic1.png](../../../picture/stream/valiev/stream_recommendation/pic1.png)
+![pic2.png](../../../picture/stream/valiev/stream_recommendation/pic2.png)
+![pic3.png](../../../picture/stream/valiev/stream_recommendation/pic3.png)
+![pic4.png](../../../picture/stream/valiev/stream_recommendation/pic4.png)
+![pic5.png](../../../picture/stream/valiev/stream_recommendation/pic5.png)
+![pic6.png](../../../picture/stream/valiev/stream_recommendation/pic6.png)
 List.stream нам не поможет, поэтому делаем
 IntStream.range - создает поток целых чисел от 0 до list.size, далее mapToObject преобразует в объект где на вход Idx -
 целое число.
 List.get(i) -быстрая операция
-![pic7.png](../../../picture/stream/pic7.png)
+![pic7.png](../../../picture/stream/valiev/stream_recommendation/pic7.png)
 В независимости от того в какой структуре хранятся юзеры - мы можем из любой структуры создать стрим, и не будет
 накладных расходов.
 
-![pic8.png](../../../picture/stream/pic8.png)
-![pic9.png](../../../picture/stream/pic9.png)
+![pic8.png](../../../picture/stream/valiev/stream_recommendation/pic8.png)
+![pic9.png](../../../picture/stream/valiev/stream_recommendation/pic9.png)
 Это решение для 3х элементов
 
 Универсальное решение
@@ -35,19 +35,30 @@ List.get(i) -быстрая операция
 ```
 
 Следующая задача
-![pic10.png](../../../picture/stream/pic10.png)
+![pic10.png](../../../picture/stream/valiev/stream_recommendation/pic10.png)
 Здесь решение не особо красивое
 потому что две последние операции связаны между собой и делают общее дело -
 фильтруем по классу, кастуем до требуемого класса
 
-![pic11.png](../../../picture/stream/pic11.png)
+![pic11.png](../../../picture/stream/valiev/stream_recommendation/pic11.png)
 Но здесь ломается красота стрим апи - чтение слева направо
 Альтернатива
 
-![pic12.png](../../../picture/stream/pic12.png)
+![pic12.png](../../../picture/stream/valiev/stream_recommendation/pic12.png)
 Метод select возвращает функцию с элемента на стрим.
 Недостаток - затраты на много промежуточных стримов
 
-![pic12.png](../../../picture/stream/pic12.png)
+![pic13.png](../../../picture/stream/valiev/stream_recommendation/pic13.png)
 Либа streamEx   
 select- здесь написан в качестве библиотеки под stream api
+
+![pic14.png](../../../picture/stream/valiev/stream_recommendation/pic14.png)
+Решение через функцию
+![pic15.png](../../../picture/stream/valiev/stream_recommendation/pic15.png)
+
+![pic16.png](../../../picture/stream/valiev/stream_recommendation/pic16.png)
+Реализация если бы не было java 9
+![pic17.png](../../../picture/stream/valiev/stream_recommendation/pic17.png)
+![pic18.png](../../../picture/stream/valiev/stream_recommendation/pic18.png)
+
+Терминальные операции
