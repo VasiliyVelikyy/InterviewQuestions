@@ -67,3 +67,29 @@ select- здесь написан в качестве библиотеки по�
 ![pic20.png](../../../picture/stream/valiev/stream_recommendation/pic20.png)
 Решение
 ![pic21.png](../../../picture/stream/valiev/stream_recommendation/pic21.png)
+
+для упрощение рекомендуеться делать импорт всего collectors
+import Collecvtors.*
+![pic22.png](../../../picture/stream/valiev/stream_recommendation/pic22.png)
+![pic23.png](../../../picture/stream/valiev/stream_recommendation/pic23.png)
+![pic24.png](../../../picture/stream/valiev/stream_recommendation/pic24.png)
+![pic25.png](../../../picture/stream/valiev/stream_recommendation/pic25.png)
+Решение через либу
+![pic26.png](../../../picture/stream/valiev/stream_recommendation/pic26.png)
+Как делать ненадо
+![pic27.png](../../../picture/stream/valiev/stream_recommendation/pic27.png)
+
+Придумываем свою функцию
+![pic28.png](../../../picture/stream/valiev/stream_recommendation/pic28.png)
+![pic29.png](../../../picture/stream/valiev/stream_recommendation/pic29.png)
+
+![pic30.png](../../../picture/stream/valiev/stream_recommendation/pic30.png)
+Но здесь нарушение апи, так как подаем на вход statefull объект а нужно stateless
+
+![pic31.png](../../../picture/stream/valiev/stream_recommendation/pic31.png)
+Parallel не работает. Так как в reduce должны подавать сочетательный (ассоциативный оператор)закон/
+Параллельный поток идет не по порядку элементов
+![pic32.png](../../../picture/stream/valiev/stream_recommendation/pic32.png)
+Здесь forEachOrder гарантирует порядок элементов
+
+Любым способом
