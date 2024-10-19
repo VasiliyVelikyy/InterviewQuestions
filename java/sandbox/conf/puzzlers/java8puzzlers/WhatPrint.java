@@ -1,4 +1,4 @@
-package sandbox.conf.puzzlers;
+package sandbox.conf.puzzlers.java8puzzlers;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

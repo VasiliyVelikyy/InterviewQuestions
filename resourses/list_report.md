@@ -8,6 +8,8 @@
   <https://www.youtube.com/watch?v=TPHMyVyktsw>
 * Java 8 Puzzlers
   <https://www.youtube.com/watch?v=6bN1HcRhse4>
+* Java Puzzlers NG S04
+  <https://www.youtube.com/watch?v=7PnYBYL9pnc>
 
 # Статьи
 
