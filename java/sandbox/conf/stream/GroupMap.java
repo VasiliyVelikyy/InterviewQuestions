@@ -1,4 +1,4 @@
-package sandbox.courses.tagir_valiev.stream;
+package sandbox.conf.stream;
 
 import java.util.HashMap;
 import java.util.List;
