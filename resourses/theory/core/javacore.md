@@ -22,3 +22,30 @@
 
 * protected native Object clone()
   Метод позволяет клонировать объект: создает дубликат объекта
+
+# Статическое связывание
+
+Что выведет эта программа? Collection, Set или HashSet?
+```java
+public class Example {
+    public static void main(String[] args) {
+        Collection collection = new HashSet();
+        print(collection);
+    }
+
+    private static void print(Collection collection) {
+        System.out.println("collection");
+    }
+
+    private static void print(Set collection) {
+        System.out.println("set");
+    }
+
+    private static void print(HashSet collection) {
+        System.out.println("hashSet");
+    }
+}
+```
+Приватные, статические и final-методы связываются
+при помощи статического связывания (Раннего), а виртуальные – динамического. Аналогично, лучший пример статического связывания –
+перегрузка методов, а переопределение – динамического.

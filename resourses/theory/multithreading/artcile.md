@@ -24,3 +24,13 @@
 
 > <https://habr.com/ru/articles/565924/>
 > <https://www.youtube.com/watch?v=t0dGLFtRR9c/>
+
+* Synchronized
+
+> <https://habr.com/ru/companies/otus/articles/830356/>
+
+
+* Различия между atomic, volatile и synchronized в Java
+
+> <https://sky.pro/media/razlichiya-mezhdu-atomic-volatile-i-synchronized-v-java/>
+> <https://proselyte.net/how-volatile-works-in-java/>
