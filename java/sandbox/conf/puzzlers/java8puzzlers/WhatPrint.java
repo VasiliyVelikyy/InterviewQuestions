@@ -49,7 +49,7 @@ public class WhatPrint {
         ExecutorService ex = Executors.newSingleThreadExecutor();
         List<String> sentence = Arrays.asList("Казнить");
         ex.submit(() -> Files.write(Paths.get("Приговор.txt"), sentence)); // 1
-        //ex.submit(() -> { Files.write(Paths.get("Приговор.txt"), sentence); }); // 2
+        // ex.submit(() -> { Files.write(Paths.get("Приговор.txt"), sentence); }); // 2
 
     }
 

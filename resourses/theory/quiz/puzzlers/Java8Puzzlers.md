@@ -54,9 +54,9 @@ D. ConcurrentModificationException
     ExecutorService ex = Executors.newSingleThreadExecutor();
     List<String> sentence = Arrays.asList("Казнить");
     ex.submit(() -> Files.write(Paths.get("Приговор.txt"), sentence)); // 1
-    ex.submit(() -> {
+    ex.submit(() -> { // 2
         Files.write(Paths.get("Приговор.txt"), sentence);
-    }); // 2
+    }); 
 }
 ```
 
