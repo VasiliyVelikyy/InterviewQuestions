@@ -407,4 +407,4 @@ b2.addActionListener(e -> System.out.println("Кнопка нажата!"));
 ```
 
 # Что такое Generic
-
+https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/core/generics.md

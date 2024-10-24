@@ -1,6 +1,6 @@
 package sandbox.my_examples.generics;
 
-public class TestClass<T> {
+ class TestClass<T> {
 
     private T value1;
     private T value2;
