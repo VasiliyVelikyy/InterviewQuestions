@@ -405,3 +405,6 @@ b2.addActionListener(new ActionListener() {
 JButton b2 = new JButton("Click");
 b2.addActionListener(e -> System.out.println("Кнопка нажата!"));
 ```
+
+# Что такое Generic
+
