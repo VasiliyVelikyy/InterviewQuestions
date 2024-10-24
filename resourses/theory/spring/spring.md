@@ -462,3 +462,152 @@ IoC, такими как ClassPathXmlApplicationContext, генерируетс�
 Нет, в контейнере только синглтоны. Это важно, ведь если мы пропишем дестрой методы. При закрытии контекста спринг
 пробежится по всем синглтонам их вызовет,
 а у prototype они работать не будут
+
+# Потокобезопасен ли singleton?
+
+* Нет, Spring Singelton Bean не является потокобезопасным. Вот пример
+
+```java
+public class Emmloyee {
+    private int id;
+    private String name;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+```
+
+И вот applicationContext.xml
+
+```xml
+
+<bean id="emp" class="com.manikant.Emmloyee" p:id="26" p:name="Manikant Gautam">
+```
+
+А вот тестовый класс
+
+```java
+
+public class Test {
+
+    public static void main(String[] args) {
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("com/manikant/config.xml");
+        Emmloyee emp = (Emmloyee) ctx.getBean("emp");
+        System.out.println("User " + emp.getName() + " is of age " + emp.getId());
+        emp.setName("Changed value");
+
+        Emmloyee emp1 = (Emmloyee) ctx.getBean("emp");
+        System.out.println("User " + emp1.getName() + " is of age " + emp1.getId());
+        //Вот вывод
+        //User Manikant Gautam is of age 26
+        //User Changed value is of age 26
+    }
+}
+
+```
+Изменение также value отражается emp.setName("Changed value") на разных bean emp1.
+
+# Потокобезопасный Singletone
+
+Создание потокобезопасного синглтона в Java можно осуществить с использованием различных подходов. Вот несколько
+способов:
+
+Используя synchronized метод getInstance():
+
+```java
+public class ThreadSafeSingleton {
+    private static ThreadSafeSingleton instance;
+
+    private ThreadSafeSingleton() {
+        // Приватный конструктор }
+
+        public static synchronized ThreadSafeSingleton getInstance () {
+            if (instance == null) {
+                instance = new ThreadSafeSingleton();
+            }
+            return instance;
+        }
+    }
+}
+```
+
+В этом примере метод getInstance() объявлен как synchronized, что гарантирует, что только один поток может выполнить его
+одновременно. Однако, этот подход может вызывать некоторые накладные расходы на производительность из-за блокировки
+всего метода при каждом доступе к синглтону.
+
+Используя synchronized блок внутри метода getInstance():
+
+```java
+public class ThreadSafeSingleton {
+    private static ThreadSafeSingleton instance;
+
+    private ThreadSafeSingleton() {
+        // Приватный конструктор }
+
+        public static ThreadSafeSingleton getInstance () {
+            if (instance == null) {
+                synchronized (ThreadSafeSingleton.class) {
+                    if (instance == null) {
+                        instance = new ThreadSafeSingleton();
+                    }
+                }
+            }
+            return instance;
+        }
+    }
+}
+```
+
+В этом подходе используется double checked locking, который обеспечивает ленивую инициализацию синглтона без
+синхронизации при каждом доступе. Однако, реализация double checked locking может быть сложной и подвержена ошибкам.
+
+Используя статический вложенный класс (static nested class):
+
+```java
+public class ThreadSafeSingleton {
+    private ThreadSafeSingleton() {
+        // Приватный конструктор }
+
+        private static class SingletonHelper {
+            private static final ThreadSafeSingleton instance = new ThreadSafeSingleton();
+        }
+
+        public static ThreadSafeSingleton getInstance () {
+            return SingletonHelper.instance;
+        }
+    }
+}
+```
+
+В этом подходе экземпляр синглтона создается при загрузке класса SingletonHelper, что гарантирует потокобезопасность.
+Это основано на механизме инициализации статических полей в Java.
+
+Используя перечисление (enum):
+
+```java
+public enum ThreadSafeSingleton {
+    INSTANCE;
+
+    // Дополнительные поля и методы
+    public void doSomething() {
+        // Реализация }
+    }
+}
+```
+
+В этом подходе синглтон создается автоматически при загрузке перечисления и гарантируется его уникальность и
+потокобезопасность.
+
+Выбор конкретного подхода зависит от требований и контекста вашего приложения. Важно помнить, что потокобезопасность
+синглтона - это только один из аспектов, которые следует учитывать при разработке.
