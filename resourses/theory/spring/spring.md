@@ -492,7 +492,7 @@ public class Emmloyee {
 
 ```xml
 
-<bean id="emp" class="com.manikant.Emmloyee" p:id="26" p:name="Manikant Gautam">
+<bean id="emp" class="com.manikant.Emmloyee" p:id="26" p:name="Manikant Gautam"/>
 ```
 
 А вот тестовый класс
@@ -530,7 +530,8 @@ public class ThreadSafeSingleton {
     private static ThreadSafeSingleton instance;
 
     private ThreadSafeSingleton() {
-        // Приватный конструктор }
+        // Приватный конструктор 
+         }
 
         public static synchronized ThreadSafeSingleton getInstance () {
             if (instance == null) {
@@ -553,7 +554,8 @@ public class ThreadSafeSingleton {
     private static ThreadSafeSingleton instance;
 
     private ThreadSafeSingleton() {
-        // Приватный конструктор }
+        // Приватный конструктор 
+         }
 
         public static ThreadSafeSingleton getInstance () {
             if (instance == null) {
@@ -577,7 +579,8 @@ public class ThreadSafeSingleton {
 ```java
 public class ThreadSafeSingleton {
     private ThreadSafeSingleton() {
-        // Приватный конструктор }
+        // Приватный конструктор 
+         }
 
         private static class SingletonHelper {
             private static final ThreadSafeSingleton instance = new ThreadSafeSingleton();
@@ -586,8 +589,8 @@ public class ThreadSafeSingleton {
         public static ThreadSafeSingleton getInstance () {
             return SingletonHelper.instance;
         }
-    }
 }
+
 ```
 
 В этом подходе экземпляр синглтона создается при загрузке класса SingletonHelper, что гарантирует потокобезопасность.
