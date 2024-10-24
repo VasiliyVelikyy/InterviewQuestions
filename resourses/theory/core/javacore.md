@@ -161,3 +161,34 @@ public class Example {
 
 Использование ключевого слова abstract в функциональных интерфейсах необязательно, поскольку методы, определенные внутри
 интерфейса, по умолчанию являются абстрактными.
+
+# Какие виды вложенных классов существуют
+1) Вложенные внутренние классы – нестатические классы внутри внешнего класса.
+``` java
+  public class Airplane {
+      private String name, id, flight;
+      private Wing leftWing = new Wing("Red", "X3"), rightWing = new Wing("Blue", "X3");
+  
+      public Airplane(String name, String id, String flight) {
+          this.name = name;
+          this.id = id;
+          this.flight = flight;
+      }
+  
+      private class Wing {
+          private String color, model;
+  
+          private Wing(String color, String model) {
+              this.color = color;
+              this.model = model;
+          }
+  
+          // getters/setters
+      }
+  
+      // getters/setters
+  }
+ ```
+3) Вложенные статические классы – статические классы внутри внешнего класса.
+3) Локальные классы Java – классы внутри методов.
+4) Анонимные Java классы – классы, которые создаются на ходу.
