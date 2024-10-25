@@ -1,4 +1,6 @@
-Generics — это параметризованные типы. Особые средства языка Java для реализации обобщённого программирования: особого
+### Generics
+
+— это параметризованные типы. Особые средства языка Java для реализации обобщённого программирования: особого
 подхода к описанию данных и алгоритмов, позволяющего работать с различными типами данных без изменения их описания.
 
 ```java
@@ -465,3 +467,101 @@ Wildcard позволил нам легко уместить нужную лог
 <? extends Number> только Number и наследники ,
 <? super Integer>-только integer  и родитель, 
 <?>-без ограничения 
+
+## Bridge-метод
+
+Методы которые генерирует java для сохранения полиморфизма
+В процессе выполнения Type Erasure (затирания типов) компилятор производит следующие действия:
+
+- добавляет приведение типов для обеспечения type safety, если это необходимо
+- генерирует Bridge методы для сохранения полиморфизма.
+
+```java
+class Node<T> {
+    public T data;
+
+    public Node(T data) {this.data = data;}
+
+    public void setData(T data) {
+        System.out.println("Node.setData");
+        this.data = data;
+    }
+}
+
+class MyNode extends Node<Integer> {
+    public MyNode(Integer data) {super(data);}
+
+    public void setData(Integer data) {
+        System.out.println("MyNode.setData");
+        super.setData(data);
+    }
+}
+
+public class Example {
+    public static void main(String[] args) {
+        MyNode mn = new MyNode(5);
+        Node n = mn;
+        n.setData("Hello");
+        Integer x = mn.data;
+    }
+}
+```
+
+После стирания типов выглядеть он будет так
+
+```java
+public class Node {
+    public Object data;
+
+    public Node(Object data) {this.data = data;}
+
+    public void setData(Object data) {
+        System.out.println("Node.setData");
+        this.data = data;
+    }
+}
+
+public class MyNode extends Node {
+
+    public MyNode(Integer data) {super(data);}
+
+    public void setData(Integer data) {
+        System.out.println("MyNode.setData");
+        super.setData(data);
+    }
+}
+
+public class Example {
+    public static void main(String[] args) {
+        MyNode mn = new MyNode(5);
+        Node n = (MyNode) mn;
+        n.setData("Hello");
+        Integer x = (String) mn.data;
+    }
+}
+```
+
+Можно заметить, что после стирания типов сигнатуры метода setData в MyNode и Node больше не совпадают, а значит субкласс
+не переопределяет метод и полиморфизм оказывается сломан. Чтобы исправить эту ситуацию, компилятор генерирует для MyNode
+bridge-метод такого вида
+
+```
+public void setData(Object data) {
+    setData((Integer) data);
+} 
+```
+
+Увидеть его можно, заглянуть в байткод с помощью команды javap -c -v MyNode
+
+```
+ public void setData(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)V
+    flags: ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0
+         1: aload_1
+         2: checkcast     #6                  // class java/lang/Integer
+         5: invokevirtual #7                  // Method setData:(Ljava/lang/Integer;)V
+         8: return
+```

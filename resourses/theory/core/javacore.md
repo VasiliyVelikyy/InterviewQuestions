@@ -38,6 +38,7 @@ public class Test {
 * public native int hashCode()
 * public boolean equals(Object obj)
   Пара методов, которые используются для сравнения объектов.
+**Если у наследника не предопределять equals - он будет сравнивать ссылки в памяти**
 
 * public final native Class getClass()
   Возвращает специальный объект, который описывает текущий класс.
