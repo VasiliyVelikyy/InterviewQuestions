@@ -1,4 +1,4 @@
-[* @Transactional
+* @Transactional
     - <https://www.youtube.com/watch?v=2E8FKi4oC0o>
     - <https://www.youtube.com/watch?v=QZ9rXZT0DlQ>
     -
@@ -21,6 +21,13 @@
 * SQL инъекции
 
 > - <https://habr.com/ru/articles/725134/>
+
+* SQL
+
+> - <https://habr.com/ru/articles/745948/>
+> - <https://habr.com/ru/articles/790850/>
+> - <https://qarocks.ru/sql-interview-part-2/>
+> - <https://qarocks.ru/25-advanced-sql-interview-questions/>
 
 * Уровни изоляции
 
