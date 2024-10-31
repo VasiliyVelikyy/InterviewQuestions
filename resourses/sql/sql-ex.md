@@ -70,5 +70,24 @@ Laptop аналогична таблице РС за исключением то
     WHERE l.hd >= 10
     ```
 7) Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
-
+   ```sql
+   SELECT  p.model, pc.price 
+   FROM Product p
+   JOIN PC pc ON pc.model = p.model
+   WHERE p.maker = 'B'
+   
+   UNION 
+   
+   SELECT p.model, l.price 
+   FROM Product p
+   JOIN Laptop l ON l.model = p.model
+   WHERE p.maker = 'B'
+   
+   UNION 
+   
+   SELECT p.model, pr.price 
+   FROM Product p
+   JOIN Printer pr ON pr.model = p.model
+   WHERE p.maker = 'B'
+   ```
     
