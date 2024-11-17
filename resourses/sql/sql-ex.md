@@ -90,4 +90,14 @@ Laptop аналогична таблице РС за исключением то
    JOIN Printer pr ON pr.model = p.model
    WHERE p.maker = 'B'
    ```
+   
+8) Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+   ```sql
+   SELECT p.maker FROM Product p
+   WHERE type = 'PC'
+   EXCEPT
+   SELECT p.maker FROM Product p
+   WHERE type = 'Laptop'
+
+   ```
     
