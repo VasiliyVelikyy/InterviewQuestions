@@ -90,7 +90,7 @@ Laptop аналогична таблице РС за исключением то
    JOIN Printer pr ON pr.model = p.model
    WHERE p.maker = 'B'
    ```
-   
+
 8) Найдите производителя, выпускающего ПК, но не ПК-блокноты.
    ```sql
    SELECT p.maker FROM Product p
@@ -98,6 +98,19 @@ Laptop аналогична таблице РС за исключением то
    EXCEPT
    SELECT p.maker FROM Product p
    WHERE type = 'Laptop'
-
    ```
-    
+
+9) Найдите производителей ПК с процессором не менее 450 Мгц. Вывести: Maker
+   ```sql
+   SELECT DISTINCT p.maker FROM Product p
+   JOIN PC ON p.model = PC.model
+   WHERE PC.speed >= 450
+    ```
+
+10) Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+   ```sql
+   SELECT model, price
+   FROM Laptop l
+   WHERE price = (SELECT MAX(price) 
+                   FROM Laptop)
+   ```   

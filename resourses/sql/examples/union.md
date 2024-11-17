@@ -1,28 +1,3 @@
-# INTERSECT
-
-SQL оператор INTERSECT используется для возврата результатов 2 или более операторов SELECT. Однако он возвращает только
-строки, выбранные всеми запросами или наборами данных. Если запись существует в одном запросе, а не в другом, она будет
-опущена в результатах INTERSECT.
-
-```sql
-SELECT *
-FROM product
-WHERE (maker = 'A' OR maker = 'B')
-  AND type = 'pc';
-```
-
-можно выразить через пересечение
-
-```sql
-SELECT *
-FROM product
-WHERE maker = 'A'
-   OR maker = 'B'
-INTERSECT
-SELECT *
-FROM product
-WHERE type = 'pc';
-```
 
 # UNION
 
