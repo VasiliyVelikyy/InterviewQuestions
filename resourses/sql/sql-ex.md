@@ -190,4 +190,13 @@ Outcomes (ship, battle, result)
         AND a.ram = b.ram
         AND b.model < a.model
       ```
+17) Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
+    Вывести: type, model, speed
+   ```sql
+   SELECT DISTINCT p.type, p.model, l.speed
+   FROM Laptop l
+   JOIN Product p ON p.model = l.model
+   WHERE l.speed < ALL 
+                 (SELECT speed FROM PC)
+   ```
 
