@@ -60,7 +60,7 @@ Outcomes (ship, battle, result)
    ```
 
 5) Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.
-   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
     ```sql
     SELECT p.model, p.speed, p.hd
     FROM PC p
@@ -90,7 +90,7 @@ Outcomes (ship, battle, result)
     WHERE l.hd >= 10
     ```
 7) Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
-   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
    ```sql
    SELECT  p.model, pc.price 
    FROM Product p
@@ -113,7 +113,7 @@ Outcomes (ship, battle, result)
    ```
 
 8) Найдите производителя, выпускающего ПК, но не ПК-блокноты.
-   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
    ```sql
    SELECT p.maker FROM Product p
    WHERE type = 'PC'
@@ -130,7 +130,7 @@ Outcomes (ship, battle, result)
     ```
 
 10) Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
    SELECT model, price
    FROM Laptop l
@@ -139,13 +139,13 @@ Outcomes (ship, battle, result)
    ```  
 
 11) Найдите среднюю скорость ПК.
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
    SELECT AVG(speed)
    FROM PC
    ```
 12) Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
 
      ```sql
       SELECT AVG(speed) FROM Laptop
@@ -153,7 +153,7 @@ Outcomes (ship, battle, result)
      ```
 
 13) Найдите среднюю скорость ПК, выпущенных производителем A.
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
    SELECT AVG(pc.speed)
    FROM PC
@@ -170,7 +170,7 @@ Outcomes (ship, battle, result)
    ```
 
 15) Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/group_by_and_heaving.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/group_by_and_heaving.md>
      ```sql
     SELECT hd
     FROM PC
@@ -180,7 +180,7 @@ Outcomes (ship, battle, result)
 
 16) Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз,
     т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/several_sourses.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/several_sourses.md>
 
     ```sql
       SELECT DISTINCT a.model as model_1, b.model AS model_2, a.speed, a.ram
@@ -192,12 +192,47 @@ Outcomes (ship, battle, result)
       ```
 17) Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
     Вывести: type, model, speed
-    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/any_all.md>
-   ```sql
-   SELECT DISTINCT p.type, p.model, l.speed
-   FROM Laptop l
-   JOIN Product p ON p.model = l.model
-   WHERE l.speed < ALL 
-                 (SELECT speed FROM PC)
-   ```
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/any_all.md>
+    ```sql
+    SELECT DISTINCT p.type, p.model, l.speed
+    FROM Laptop l
+             JOIN Product p ON p.model = l.model
+    WHERE l.speed < ALL
+          (SELECT speed FROM PC)
+    ```
 
+18) Найдите производителей самых дешевых цветных принтеров. Вывести: maker, price
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+
+    ```sql
+    SELECT DISTINCT b.maker, a.price
+    FROM Printer a
+             JOIN Product b ON b.model = a.model
+    WHERE a.color = 'y'
+      AND a.price = (SELECT MIN(price)
+                     FROM Printer
+                     WHERE color = 'y')
+    ```
+19) Для каждого производителя, имеющего модели в таблице Laptop, найдите средний размер экрана выпускаемых им
+    ПК-блокнотов.
+    Вывести: maker, средний размер экрана.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+
+    ```sql
+     SELECT p.maker, AVG(screen) AS Avg_screen
+     FROM Product p
+     JOIN Laptop l ON p.model = l.model
+     GROUP BY p.maker
+    ```
+20) Найдите производителей, выпускающих по меньшей мере три различных модели ПК. Вывести: Maker, число моделей ПК.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+    ```sql
+    SELECT DISTINCT p.maker, COUNT(model) as Count_Model
+    FROM Product p
+    WHERE p.type = 'PC'
+    GROUP BY P.maker
+    HAVING COUNT(model) >= 3
+    ```
