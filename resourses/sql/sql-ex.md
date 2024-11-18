@@ -166,3 +166,12 @@ Outcomes (ship, battle, result)
    GROUP BY hd
    HAVING COUNT(HD) >= 2
    ```
+16) Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз,
+    т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
+   ```sql
+   SELECT DISTINCT a.model as model_1, b.model AS model_2, a.speed, a.ram 
+   FROM PC AS a, PC AS b
+   WHERE a.speed = b.speed 
+         AND a.ram = b.ram 
+         AND  b.model < a.model
+   ```
