@@ -192,6 +192,7 @@ Outcomes (ship, battle, result)
       ```
 17) Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
     Вывести: type, model, speed
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/any_all.md>
    ```sql
    SELECT DISTINCT p.type, p.model, l.speed
    FROM Laptop l
