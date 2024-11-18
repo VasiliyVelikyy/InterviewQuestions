@@ -60,7 +60,7 @@ Outcomes (ship, battle, result)
    ```
 
 5) Найдите номер модели, скорость и размер жесткого диска ПК, имеющих 12x или 24x CD и цену менее 600 дол.
-
+   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
     ```sql
     SELECT p.model, p.speed, p.hd
     FROM PC p
@@ -90,6 +90,7 @@ Outcomes (ship, battle, result)
     WHERE l.hd >= 10
     ```
 7) Найдите номера моделей и цены всех имеющихся в продаже продуктов (любого типа) производителя B (латинская буква).
+   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
    ```sql
    SELECT  p.model, pc.price 
    FROM Product p
@@ -112,6 +113,7 @@ Outcomes (ship, battle, result)
    ```
 
 8) Найдите производителя, выпускающего ПК, но не ПК-блокноты.
+   <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
    ```sql
    SELECT p.maker FROM Product p
    WHERE type = 'PC'
@@ -128,6 +130,7 @@ Outcomes (ship, battle, result)
     ```
 
 10) Найдите модели принтеров, имеющих самую высокую цену. Вывести: model, price
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
    SELECT model, price
    FROM Laptop l
@@ -136,42 +139,55 @@ Outcomes (ship, battle, result)
    ```  
 
 11) Найдите среднюю скорость ПК.
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
    SELECT AVG(speed)
-    FROM PC
+   FROM PC
    ```
 12) Найдите среднюю скорость ПК-блокнотов, цена которых превышает 1000 дол.
-   ```sql
-   SELECT AVG(speed) FROM Laptop
-   WHERE price > 1000
-   ```
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+
+     ```sql
+      SELECT AVG(speed) FROM Laptop
+      WHERE price > 1000
+     ```
 
 13) Найдите среднюю скорость ПК, выпущенных производителем A.
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
    ```sql
-    SELECT AVG(pc.speed)
+   SELECT AVG(pc.speed)
    FROM PC
    JOIN Product p ON p.model = pc.model
    WHERE p.maker = 'A'
    ```
+
 14) Найдите класс, имя и страну для кораблей из таблицы Ships, имеющих не менее 10 орудий.
    ```sql
-      SELECT s.class, s.name, c.country 
-      FROM Ships s
-      JOIN Classes c ON c.class = s.class
-      WHERE C.numGuns >= 10
+   SELECT s.class, s.name, c.country 
+  FROM Ships s
+  JOIN Classes c ON c.class = s.class
+  WHERE C.numGuns >= 10
    ```
+
 15) Найдите размеры жестких дисков, совпадающих у двух и более PC. Вывести: HD
-   ```sql
-   SELECT hd FROM PC
-   GROUP BY hd
-   HAVING COUNT(HD) >= 2
-   ```
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/group_by_and_heaving.md>
+     ```sql
+    SELECT hd
+    FROM PC
+    GROUP BY hd
+    HAVING COUNT(HD) >= 2
+      ```
+
 16) Найдите пары моделей PC, имеющих одинаковые скорость и RAM. В результате каждая пара указывается только один раз,
     т.е. (i,j), но не (j,i), Порядок вывода: модель с большим номером, модель с меньшим номером, скорость и RAM.
-   ```sql
-   SELECT DISTINCT a.model as model_1, b.model AS model_2, a.speed, a.ram 
-   FROM PC AS a, PC AS b
-   WHERE a.speed = b.speed 
-         AND a.ram = b.ram 
-         AND  b.model < a.model
-   ```
+    <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/several_sourses.md>
+
+    ```sql
+      SELECT DISTINCT a.model as model_1, b.model AS model_2, a.speed, a.ram
+      FROM PC AS a,
+           PC AS b
+      WHERE a.speed = b.speed
+        AND a.ram = b.ram
+        AND b.model < a.model
+      ```
+
