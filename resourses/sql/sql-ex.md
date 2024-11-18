@@ -229,10 +229,31 @@ Outcomes (ship, battle, result)
     ```
 20) Найдите производителей, выпускающих по меньшей мере три различных модели ПК. Вывести: Maker, число моделей ПК.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+
     ```sql
     SELECT DISTINCT p.maker, COUNT(model) as Count_Model
     FROM Product p
     WHERE p.type = 'PC'
     GROUP BY P.maker
     HAVING COUNT(model) >= 3
+    ```
+21) Найдите максимальную цену ПК, выпускаемых каждым производителем, у которого есть модели в таблице PC.
+    Вывести: maker, максимальная цена.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+
+    ```sql
+    SELECT p.maker, MAX(price)
+    FROM PC pc
+    JOIN Product p ON p.model = pc.model
+    GROUP BY p.maker
+    ```
+22) Для каждого значения скорости ПК, превышающего 600 МГц, определите среднюю цену ПК с такой же скоростью. Вывести: speed, средняя цена.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+
+    ```sql
+    SELECT speed, AVG(price) AS avg_price
+    FROM PC
+    WHERE speed > 600
+    GROUP BY speed
     ```
