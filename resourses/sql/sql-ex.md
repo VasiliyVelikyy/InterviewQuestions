@@ -248,7 +248,8 @@ Outcomes (ship, battle, result)
     JOIN Product p ON p.model = pc.model
     GROUP BY p.maker
     ```
-22) Для каждого значения скорости ПК, превышающего 600 МГц, определите среднюю цену ПК с такой же скоростью. Вывести: speed, средняя цена.
+22) Для каждого значения скорости ПК, превышающего 600 МГц, определите среднюю цену ПК с такой же скоростью. Вывести:
+    speed, средняя цена.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
 
     ```sql
@@ -256,4 +257,39 @@ Outcomes (ship, battle, result)
     FROM PC
     WHERE speed > 600
     GROUP BY speed
+    ```
+23) Найдите производителей, которые производили бы как ПК
+    со скоростью не менее 750 МГц, так и ПК-блокноты со скоростью не менее 750 МГц.
+    Вывести: Maker
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
+    
+    ```sql
+    SELECT p.maker
+    FROM Product p
+    JOIN PC ON PC.model = p.model
+    WHERE pc.speed >= 750
+    INTERSECT
+    SELECT p.maker
+    FROM Product p
+    JOIN Laptop l ON p.model = l.model
+    WHERE l.speed >= 750
+    ```
+    
+24) Перечислите номера моделей любых типов, имеющих самую высокую цену по всей имеющейся в базе данных продукции.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+    ```sql
+    WITH ALL_PRICE AS (SELECT model, price
+                       FROM PC
+                       UNION
+                       SELECT model, price
+                       FROM Laptop
+                       UNION
+                       SELECT model, price
+                       FROM Printer)
+    SELECT model
+    FROM ALL_PRICE ap
+    WHERE ap.price = (SELECT MAX(price) FROM ALL_PRICE)
     ```
