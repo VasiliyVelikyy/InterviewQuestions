@@ -207,6 +207,7 @@ Outcome(code, point, date, out)
         AND a.ram = b.ram
         AND b.model < a.model
       ```
+
 17) Найдите модели ПК-блокнотов, скорость которых меньше скорости каждого из ПК.
     Вывести: type, model, speed
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/any_all.md>
@@ -232,6 +233,7 @@ Outcome(code, point, date, out)
                      FROM Printer
                      WHERE color = 'y')
     ```
+
 19) Для каждого производителя, имеющего модели в таблице Laptop, найдите средний размер экрана выпускаемых им
     ПК-блокнотов.
     Вывести: maker, средний размер экрана.
@@ -244,6 +246,7 @@ Outcome(code, point, date, out)
      JOIN Laptop l ON p.model = l.model
      GROUP BY p.maker
     ```
+
 20) Найдите производителей, выпускающих по меньшей мере три различных модели ПК. Вывести: Maker, число моделей ПК.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
 
@@ -254,6 +257,7 @@ Outcome(code, point, date, out)
     GROUP BY P.maker
     HAVING COUNT(model) >= 3
     ```
+
 21) Найдите максимальную цену ПК, выпускаемых каждым производителем, у которого есть модели в таблице PC.
     Вывести: maker, максимальная цена.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
@@ -275,6 +279,7 @@ Outcome(code, point, date, out)
     WHERE speed > 600
     GROUP BY speed
     ```
+
 23) Найдите производителей, которые производили бы как ПК
     со скоростью не менее 750 МГц, так и ПК-блокноты со скоростью не менее 750 МГц.
     Вывести: Maker
@@ -311,6 +316,7 @@ Outcome(code, point, date, out)
     FROM ALL_PRICE ap
     WHERE ap.price = (SELECT MAX(price) FROM ALL_PRICE)
     ```
+
 25) Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди
     всех ПК, имеющих наименьший объем RAM. Вывести: Maker
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
@@ -330,6 +336,7 @@ Outcome(code, point, date, out)
                                          WHERE ram IN (SELECT MIN(ram) FROM PC)))
       AND p.type = 'Printer'
     ```
+
 26) Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя
     цена.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
@@ -349,6 +356,7 @@ Outcome(code, point, date, out)
                    JOIN Product p ON p.model = l.model
           WHERE p.maker = 'A') as result
     ```
+
 27) Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний
     размер HD.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
@@ -362,6 +370,7 @@ Outcome(code, point, date, out)
     WHERE p.maker IN (SELECT maker FROM Product WHERE type = 'Printer')
     GROUP BY p.maker
     ```
+
 28) Используя таблицу Product, определить количество производителей, выпускающих по одной модели.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
@@ -373,8 +382,51 @@ Outcome(code, point, date, out)
           GROUP BY maker
           HAVING COUNT(maker) = 1) AS result
     ```
+
 29) В предположении, что приход и расход денег на каждом пункте приема фиксируется не чаще одного раза в
     день [т.е. первичный ключ (пункт, дата)], написать запрос с выходными данными (пункт, дата, приход, расход).
     Использовать таблицы Income_o и Outcome_o.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/case.md>
+
+    ```sql
+    SELECT i.point, i.date, i.inc, o.out
+    FROM Income_o i
+             LEFT JOIN Outcome_o o ON i.point = o.point AND i.date = o.date
+    UNION
+    SELECT o.point, o.date, i.inc, o.out
+    FROM Income_o i
+             RIGHT JOIN Outcome_o o ON i.point = o.point AND i.date = o.date
+    ```
+
+30) В предположении, что приход и расход денег на каждом пункте приема фиксируется произвольное число раз (первичным
+    ключом в таблицах является столбец code), требуется получить таблицу, в которой каждому пункту за каждую дату
+    выполнения операций будет соответствовать одна строка.
+    Вывод: point, date, суммарный расход пункта за день (out), суммарный приход пункта за день (inc). Отсутствующие
+    значения считать неопределенными (NULL).
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+
+    ```sql
+    SELECT point, date, SUM (sum_out), SUM (sum_inc)
+    FROM ( SELECT point, date, null as sum_out, SUM (inc) AS sum_inc
+        FROM Income
+        GROUP BY point, date
+        UNION
+        SELECT point, date, SUM (out) AS sum_out, null AS sum_inc
+        FROM Outcome
+        GROUP BY point, date ) AS t
+    GROUP BY point, date
+    ORDER BY point
+    ```
+    
+31) Для классов кораблей, калибр орудий которых не менее 16 дюймов, укажите класс и страну.
+    ```sql
+    SELECT class, country
+    FROM Classes
+    WHERE bore >= 16
+    ```
+    
+32) 
