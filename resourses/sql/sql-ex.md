@@ -280,6 +280,7 @@ Outcomes (ship, battle, result)
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+
     ```sql
     WITH ALL_PRICE AS (SELECT model, price
                        FROM PC
@@ -295,8 +296,52 @@ Outcomes (ship, battle, result)
     ```
 25) Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди
     всех ПК, имеющих наименьший объем RAM. Вывести: Maker
-    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/several_sourses.md>
-    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/several_sourses.md>
-```sql
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/in.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
 
-```
+    ```sql
+    SELECT DISTINCT p.maker
+    FROM Product p
+    WHERE p.maker IN (SELECT p.maker
+                      FROM PC
+                               JOIN Product p ON p.model = pc.model
+                      WHERE PC.ram IN (SELECT MIN(ram) FROM PC)
+                        AND PC.speed IN (SELECT MAX(speed)
+                                         FROM PC
+                                         WHERE ram IN (SELECT MIN(ram) FROM PC)))
+      AND p.type = 'Printer'
+    ```
+26) Найдите среднюю цену ПК и ПК-блокнотов, выпущенных производителем A (латинская буква). Вывести: одна общая средняя
+    цена.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+
+    ```sql
+    SELECT AVG(price) AS AVG_price
+    FROM (SELECT price
+          FROM PC
+                   JOIN Product p ON PC.model = p.model
+          WHERE p.maker = 'A'
+          UNION ALL
+          SELECT price
+          FROM Laptop l
+                   JOIN Product p ON p.model = l.model
+          WHERE p.maker = 'A') as result
+    ```
+27) Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний
+    размер HD.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/in.md>
+
+    ```sql
+    SELECT p.maker, AVG(hd) AS Avg_hd
+    FROM PC
+             JOIN Product p ON PC.model = p.model
+    WHERE p.maker IN (SELECT maker FROM Product WHERE type = 'Printer')
+    GROUP BY p.maker
+    ```
