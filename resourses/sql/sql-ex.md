@@ -263,7 +263,7 @@ Outcomes (ship, battle, result)
     Вывести: Maker
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
-    
+
     ```sql
     SELECT p.maker
     FROM Product p
@@ -275,7 +275,7 @@ Outcomes (ship, battle, result)
     JOIN Laptop l ON p.model = l.model
     WHERE l.speed >= 750
     ```
-    
+
 24) Перечислите номера моделей любых типов, имеющих самую высокую цену по всей имеющейся в базе данных продукции.
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/agregation_functions.md>
@@ -293,3 +293,10 @@ Outcomes (ship, battle, result)
     FROM ALL_PRICE ap
     WHERE ap.price = (SELECT MAX(price) FROM ALL_PRICE)
     ```
+25) Найдите производителей принтеров, которые производят ПК с наименьшим объемом RAM и с самым быстрым процессором среди
+    всех ПК, имеющих наименьший объем RAM. Вывести: Maker
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/several_sourses.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/several_sourses.md>
+```sql
+
+```
