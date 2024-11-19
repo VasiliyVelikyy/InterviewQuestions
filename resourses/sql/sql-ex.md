@@ -32,6 +32,23 @@ Outcomes (ship, battle, result)
 Замечания. 1) В отношение Outcomes могут входить корабли, отсутствующие в отношении Ships. 2) Потопленный корабль в
 последующих битвах участия не принимает.
 
+# Схема бд 3 "Фирма вторсырья":
+
+Фирма имеет несколько пунктов приема вторсырья. Каждый пункт получает деньги для их выдачи сдатчикам вторсырья. Сведения
+о получении денег на пунктах приема записываются в таблицу:
+Income_o(point, date, inc)
+Первичным ключом является (point, date). При этом в столбец date записывается только дата (без времени), т.е. прием
+денег (inc) на каждом пункте производится не чаще одного раза в день. Сведения о выдаче денег сдатчикам вторсырья
+записываются в таблицу:
+Outcome_o(point, date, out)
+В этой таблице также первичный ключ (point, date) гарантирует отчетность каждого пункта о выданных деньгах (out) не чаще
+одного раза в день.
+В случае, когда приход и расход денег может фиксироваться несколько раз в день, используется другая схема с таблицами,
+имеющими первичный ключ code:
+Income(code, point, date, inc)
+Outcome(code, point, date, out)
+Здесь также значения столбца date не содержат времени.
+
 1) Найдите номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 дол. Вывести: model, speed и
    hd
    ```sql
@@ -345,3 +362,19 @@ Outcomes (ship, battle, result)
     WHERE p.maker IN (SELECT maker FROM Product WHERE type = 'Printer')
     GROUP BY p.maker
     ```
+28) Используя таблицу Product, определить количество производителей, выпускающих по одной модели.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/subqueries.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+
+    ```sql
+    SELECT COUNT(*)
+    FROM (SELECT maker, COUNT(maker) AS count_product
+          FROM Product p
+          GROUP BY maker
+          HAVING COUNT(maker) = 1) AS result
+    ```
+29) В предположении, что приход и расход денег на каждом пункте приема фиксируется не чаще одного раза в
+    день [т.е. первичный ключ (пункт, дата)], написать запрос с выходными данными (пункт, дата, приход, расход).
+    Использовать таблицы Income_o и Outcome_o.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
