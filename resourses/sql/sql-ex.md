@@ -200,7 +200,7 @@ Outcome(code, point, date, out)
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/sql/examples/several_sourses.md>
 
     ```sql
-      SELECT DISTINCT a.model as model_1, b.model AS model_2, a.speed, a.ram
+      SELECT DISTINCT a.model AS model_1, b.model AS model_2, a.speed, a.ram
       FROM PC AS a,
            PC AS b
       WHERE a.speed = b.speed
@@ -251,7 +251,7 @@ Outcome(code, point, date, out)
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
 
     ```sql
-    SELECT DISTINCT p.maker, COUNT(model) as Count_Model
+    SELECT DISTINCT p.maker, COUNT(model) AS Count_Model
     FROM Product p
     WHERE p.type = 'PC'
     GROUP BY P.maker
@@ -354,7 +354,7 @@ Outcome(code, point, date, out)
           SELECT price
           FROM Laptop l
                    JOIN Product p ON p.model = l.model
-          WHERE p.maker = 'A') as result
+          WHERE p.maker = 'A') AS result
     ```
 
 27) Найдите средний размер диска ПК каждого из тех производителей, которые выпускают и принтеры. Вывести: maker, средний
@@ -410,23 +410,36 @@ Outcome(code, point, date, out)
     - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
 
     ```sql
-    SELECT point, date, SUM (sum_out), SUM (sum_inc)
-    FROM ( SELECT point, date, null as sum_out, SUM (inc) AS sum_inc
+    SELECT point, DATE, SUM (sum_out), SUM (sum_inc)
+    FROM ( SELECT point, DATE, NULL AS sum_out, SUM (inc) AS sum_inc
         FROM Income
-        GROUP BY point, date
+        GROUP BY point, DATE
         UNION
-        SELECT point, date, SUM (out) AS sum_out, null AS sum_inc
+        SELECT point, DATE, SUM (OUT) AS sum_out, NULL AS sum_inc
         FROM Outcome
-        GROUP BY point, date ) AS t
-    GROUP BY point, date
+        GROUP BY point, DATE ) AS t
+    GROUP BY point, DATE
     ORDER BY point
     ```
-    
+
 31) Для классов кораблей, калибр орудий которых не менее 16 дюймов, укажите класс и страну.
     ```sql
     SELECT class, country
     FROM Classes
     WHERE bore >= 16
     ```
-    
-32) 
+
+32) Одной из характеристик корабля является половина куба калибра его главных орудий (mw). С точностью до 2 десятичных
+    знаков определите среднее значение mw для кораблей каждой страны, у которой есть корабли в базе данных.
+
+    ```sql
+    SELECT country, CAST(AVG(bore * bore * bore / 2) AS NUMERIC(6, 2)) AS weight
+    FROM (SELECT name, bore, country
+          FROM Ships s
+                   JOIN Classes c ON c.class = s.class
+          UNION
+          SELECT ship, bore, country
+          FROM Outcomes o
+                   JOIN Classes c ON c.class = o.ship) AS all_ships
+    GROUP BY country
+    ```
