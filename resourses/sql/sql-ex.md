@@ -431,6 +431,11 @@ Outcome(code, point, date, out)
 
 32) Одной из характеристик корабля является половина куба калибра его главных орудий (mw). С точностью до 2 десятичных
     знаков определите среднее значение mw для кораблей каждой страны, у которой есть корабли в базе данных.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/cast.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/as.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
 
     ```sql
     SELECT country, CAST(AVG(bore * bore * bore / 2) AS NUMERIC(6, 2)) AS weight
@@ -443,3 +448,29 @@ Outcome(code, point, date, out)
                    JOIN Classes c ON c.class = o.ship) AS all_ships
     GROUP BY country
     ```
+33) Укажите корабли, потопленные в сражениях в Северной Атлантике (North Atlantic). Вывод: ship.
+    ```sql
+    SELECT ship
+    FROM Outcomes
+    WHERE battle = 'North Atlantic'
+      AND result = 'sunk'
+    ```
+
+34) По Вашингтонскому международному договору от начала 1922 г. запрещалось строить линейные корабли водоизмещением
+    более 35 тыс.тонн. Укажите корабли, нарушившие этот договор (учитывать только корабли c известным годом спуска на
+    воду). Вывести названия кораблей.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/several_sourses.md>
+
+    ```sql
+    SELECT s.name
+    FROM Classes c,
+         Ships s
+    WHERE c.class = s.class
+      AND s.launched IS NOT NULL
+      AND s.launched >= 1922
+      AND c.type = 'bb'
+      AND c.displacement > 35000
+    ```
+
+35) В таблице Product найти модели, которые состоят только из цифр или только из латинских букв (A-Z, без учета регистра).
+    Вывод: номер модели, тип модели.
