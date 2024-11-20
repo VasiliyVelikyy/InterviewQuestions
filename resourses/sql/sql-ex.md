@@ -472,5 +472,17 @@ Outcome(code, point, date, out)
       AND c.displacement > 35000
     ```
 
-35) В таблице Product найти модели, которые состоят только из цифр или только из латинских букв (A-Z, без учета регистра).
+35) В таблице Product найти модели, которые состоят только из цифр или только из латинских букв (A-Z, без учета
+    регистра).
     Вывод: номер модели, тип модели.
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/like.md>
+
+    ```sql
+    SELECT DISTINCT model, type
+    FROM Product p
+    WHERE model NOT LIKE '%[^0-9]%'
+       OR model NOT LIKE '%[^a-zA-Z]%'
+    
+    ```
+
+36) 
