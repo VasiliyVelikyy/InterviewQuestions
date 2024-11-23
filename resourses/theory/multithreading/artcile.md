@@ -34,3 +34,13 @@
 
 > <https://sky.pro/media/razlichiya-mezhdu-atomic-volatile-i-synchronized-v-java/>
 > <https://proselyte.net/how-volatile-works-in-java/>
+> 
+
+* CycleBarrier
+> <https://sysout.ru/cyclicbarrier/>
+> <https://itsobes.com/ru/java/chem-otlichaetsia-countdownlatch-ot-cyclicbarrier/>
+> <https://javarush.com/groups/posts/2111-threadom-java-ne-isportishjh--chastjh-vi---k-barjheru>
+
+* CountDownLatch
+> <https://sysout.ru/countdownlatch/>
+> <https://sky.pro/wiki/java/ispolzovanie-count-down-latch-v-mnogopotochnosti-java/>
