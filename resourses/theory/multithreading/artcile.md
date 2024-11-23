@@ -37,10 +37,10 @@
 > 
 
 * CycleBarrier
-> <https://sysout.ru/cyclicbarrier/>
-> <https://itsobes.com/ru/java/chem-otlichaetsia-countdownlatch-ot-cyclicbarrier/>
-> <https://javarush.com/groups/posts/2111-threadom-java-ne-isportishjh--chastjh-vi---k-barjheru>
+> <https://sysout.ru/cyclicbarrier/>    
+> <https://itsobes.com/ru/java/chem-otlichaetsia-countdownlatch-ot-cyclicbarrier/>  
+> <https://javarush.com/groups/posts/2111-threadom-java-ne-isportishjh--chastjh-vi---k-barjheru>    
 
 * CountDownLatch
-> <https://sysout.ru/countdownlatch/>
-> <https://sky.pro/wiki/java/ispolzovanie-count-down-latch-v-mnogopotochnosti-java/>
+> <https://sysout.ru/countdownlatch/>   
+> <https://sky.pro/wiki/java/ispolzovanie-count-down-latch-v-mnogopotochnosti-java/>    

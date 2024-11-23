@@ -479,9 +479,11 @@ public class Emmloyee {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -516,6 +518,7 @@ public class Test {
 }
 
 ```
+
 Изменение также value отражается emp.setName("Changed value") на разных bean emp1.
 
 # Потокобезопасный Singletone
@@ -531,15 +534,15 @@ public class ThreadSafeSingleton {
 
     private ThreadSafeSingleton() {
         // Приватный конструктор 
-         }
-
-        public static synchronized ThreadSafeSingleton getInstance () {
-            if (instance == null) {
-                instance = new ThreadSafeSingleton();
-            }
-            return instance;
-        }
     }
+
+    public static synchronized ThreadSafeSingleton getInstance() {
+        if (instance == null) {
+            instance = new ThreadSafeSingleton();
+        }
+        return instance;
+    }
+}
 }
 ```
 
@@ -555,19 +558,19 @@ public class ThreadSafeSingleton {
 
     private ThreadSafeSingleton() {
         // Приватный конструктор 
-         }
+    }
 
-        public static ThreadSafeSingleton getInstance () {
-            if (instance == null) {
-                synchronized (ThreadSafeSingleton.class) {
-                    if (instance == null) {
-                        instance = new ThreadSafeSingleton();
-                    }
+    public static ThreadSafeSingleton getInstance() {
+        if (instance == null) {
+            synchronized (ThreadSafeSingleton.class) {
+                if (instance == null) {
+                    instance = new ThreadSafeSingleton();
                 }
             }
-            return instance;
         }
+        return instance;
     }
+}
 }
 ```
 
@@ -580,15 +583,15 @@ public class ThreadSafeSingleton {
 public class ThreadSafeSingleton {
     private ThreadSafeSingleton() {
         // Приватный конструктор 
-         }
+    }
 
-        private static class SingletonHelper {
-            private static final ThreadSafeSingleton instance = new ThreadSafeSingleton();
-        }
+    private static class SingletonHelper {
+        private static final ThreadSafeSingleton instance = new ThreadSafeSingleton();
+    }
 
-        public static ThreadSafeSingleton getInstance () {
-            return SingletonHelper.instance;
-        }
+    public static ThreadSafeSingleton getInstance() {
+        return SingletonHelper.instance;
+    }
 }
 
 ```
@@ -614,3 +617,10 @@ public enum ThreadSafeSingleton {
 
 Выбор конкретного подхода зависит от требований и контекста вашего приложения. Важно помнить, что потокобезопасность
 синглтона - это только один из аспектов, которые следует учитывать при разработке.
+
+# BeanDefinitions что эт такое и что первее создаеться bean или beanDefinitions
+
+BeanDefinition — это специальный интерфейс, через который можно получить доступ к метаданным будущего бина. В
+зависимости от того, какая у вас конфигурация, будет использоваться тот или иной механизм парсирования конфигурации (
+xml, groove, аннотации и тд).
+> <https://habr.com/ru/articles/222579/>    

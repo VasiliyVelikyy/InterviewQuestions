@@ -546,3 +546,5 @@ reset() насильно прорывает текущий барьер и ус�
 
 Оба этих примитива помогают решить задачу о гарантированных дедлоках. Противоположность латча и барьера – семафор. В нём
 потоки блокируются при достижении счетчиком нуля.
+> <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/theory/multithreading/CountDownLatch.md>  
+> <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/theory/multithreading/CycleBarrier.md>  
