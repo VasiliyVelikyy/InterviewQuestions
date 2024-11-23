@@ -565,3 +565,19 @@ Outcome(code, point, date, out)
     GROUP BY country
     HAVING COUNT(DISTINCT type) = 2
     ```
+39) Найдите корабли, `сохранившиеся для будущих сражений`; т.е. выведенные из строя в одной битве (damaged), они
+    участвовали в другой, произошедшей позже.
+
+    ```sql
+    SELECT DISTINCT o.ship
+    FROM Outcomes o,
+         Battles b
+    WHERE o.battle = b.name
+      AND o.ship IN
+          (SELECT o1.ship
+           FROM Outcomes o1,
+                Battles b1
+           WHERE o1.battle = b1.name
+             AND o1.result = 'damaged'
+             AND b.date > b1.date)
+    ```
