@@ -38,7 +38,7 @@ public class Test {
 * public native int hashCode()
 * public boolean equals(Object obj)
   Пара методов, которые используются для сравнения объектов.
-**Если у наследника не предопределять equals - он будет сравнивать ссылки в памяти**
+  **Если у наследника не предопределять equals - он будет сравнивать ссылки в памяти**
 
 * public final native Class getClass()
   Возвращает специальный объект, который описывает текущий класс.
@@ -408,4 +408,29 @@ b2.addActionListener(e -> System.out.println("Кнопка нажата!"));
 ```
 
 # Что такое Generic
+
 https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/core/generics.md
+
+# Есть ли в java множественное наследование
+
+Классы могут быть унаследованы от 1 супер класса. Классы могут реализовывать несколько интерфейсов.
+Но интерфейсы могут быть унаследованы от нескольких супер интерфейсов
+
+```java
+interface A {
+}
+
+interface B {
+}
+
+interface C extends A, B { // сработает
+} 
+
+class D {
+}
+
+class E {
+}
+
+//class I extends D, E { } //не сработает
+```
