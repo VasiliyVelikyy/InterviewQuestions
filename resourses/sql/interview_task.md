@@ -30,3 +30,23 @@
 | 11  | 	1       | 		1 |
 | 12  | 	1	      | 	1  |
 
+1 -
+
+```sql
+SELECT T.name, l.wk, COUNT(wk)
+FROM lesson l
+         JOIN teacher t ON T.id = L.teach_id
+GROUP BY t.name, l.wk
+HAVING wk = 1
+   AND COUNT(wk) > 1
+```
+
+2-
+
+```sql
+SELECT T.name, l.wk, COUNT(wk)
+FROM lesson l
+         JOIN teacher t ON T.id = L.teach_id
+GROUP BY t.name, l.wk
+HAVING COUNT(wk) > 2
+```

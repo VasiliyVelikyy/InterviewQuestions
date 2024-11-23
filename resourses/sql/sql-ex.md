@@ -485,4 +485,83 @@ Outcome(code, point, date, out)
     
     ```
 
-36) 
+36) Перечислите названия головных кораблей, имеющихся в базе данных (учесть корабли в Outcomes).
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+
+    ```sql
+    SELECT s.name
+    FROM Classes c
+             JOIN Ships s ON c.class = s.class
+    WHERE s.name = c.class
+    UNION
+    SELECT ship
+    FROM Outcomes o
+             JOIN Classes c ON c.class = o.ship
+    ```
+
+37) Найдите классы, в которые входит только один корабль из базы данных (учесть также корабли в Outcomes).
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/union.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/join.md>
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/group_by_and_heaving.md>
+
+    ```sql
+    SELECT c.class AS count_name
+    FROM Classes c
+             LEFT JOIN (SELECT class, name
+                        FROM Ships
+                        UNION
+                        SELECT ship, ship
+                        FROM outcomes) AS all_ships
+                       ON c.class = all_ships.class
+    GROUP BY c.class
+    HAVING COUNT(all_ships.name) = 1
+    
+    ```
+    Здесь в конце ограничение COUNT(all_ships.name) , потому что у одного класса (c.class) могут быть 2 разных коробля.
+    Например классу Tennessee соответвует 2 коробля Tennessee и California
+    ```
+    вот подзапрос который вернет такой результат
+    SELECT c.class, all_ships.name
+    FROM Classes c
+             LEFT JOIN (SELECT class, name
+                        FROM Ships
+                        UNION
+                        SELECT ship, ship
+                        FROM outcomes) AS all_ships
+                       ON c.class = all_ships.class
+    WHERE c.class IN (SELECT c.class 
+                     FROM Classes c
+                              LEFT JOIN (SELECT class, name
+                                         FROM Ships
+                                         UNION
+                                         SELECT ship, ship
+                                         FROM outcomes) AS all_ships
+                                        ON c.class = all_ships.class
+                     GROUP BY c.class
+                     HAVING COUNT(all_ships.name) = 2)
+    ```
+    ![img.png](examples/pics/img.png)
+
+38) Найдите страны, имевшие когда-либо классы обычных боевых кораблей ('bb') и имевшие когда-либо классы крейсеров ('
+    bc').
+    - <https://github.com/VasiliyVelikyy/InterviewQuestions/blob/master/resourses/sql/examples/intersect_and_except.md>
+
+    ```sql
+    SELECT c.country
+    FROM Classes c
+    WHERE c.type = 'bb'
+    
+    INTERSECT
+    
+    SELECT c.country
+    FROM Classes c
+    WHERE c.type = 'bc'
+    ```
+    ЛИБО
+    ```sql
+    SELECT country
+    FROM classes
+    GROUP BY country
+    HAVING COUNT(DISTINCT type) = 2
+    ```
