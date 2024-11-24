@@ -49,7 +49,7 @@ public class WhatPrint {
         ExecutorService ex = Executors.newSingleThreadExecutor();
         List<String> sentence = Arrays.asList("Казнить");
         ex.submit(() -> Files.write(Paths.get("Приговор.txt"), sentence)); // 1
-        // ex.submit(() -> { Files.write(Paths.get("Приговор.txt"), sentence); }); // 2
+        //ex.submit(() -> { Files.write(Paths.get("Приговор.txt"), sentence); }); // 2
 
     }
 
@@ -100,11 +100,11 @@ public class WhatPrint {
         System.out.println(list.stream().max(cmp).get());
     }
 
-// Что произойдёт?
+    // Что произойдёт?
     private static void task7() {
         List<String> list = new ArrayList<>(Arrays.asList("Arne", "Chuck", "Slay"));
         list.stream().forEach(x -> {
-            if(x.equals("Chuck")) {
+            if (x.equals("Chuck")) {
                 list.remove(x);
             }
         });

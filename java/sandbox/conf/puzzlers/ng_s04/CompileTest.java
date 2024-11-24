@@ -11,7 +11,7 @@ public class CompileTest {
 
     // не компилируеться
     private void test2 () {
-       // for (;;) ;;
+       //for (;;) ;;
 
     }
     private void test3 () {

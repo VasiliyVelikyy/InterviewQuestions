@@ -1,10 +1,10 @@
 <https://www.youtube.com/watch?v=6bN1HcRhse4&t=2076s>
 # Что выведет код
 
-A. молоко/хлеб/колбаса
-B. молоко/хлеб/колбаса/яйца, яйца ещё!
-C. молоко/хлеб/колбаса/ConcurrentModificationException
-D. ConcurrentModificationException
+      A. молоко/хлеб/колбаса  
+      B. молоко/хлеб/колбаса/яйца, яйца ещё! 
+      C. молоко/хлеб/колбаса/ConcurrentModificationException   
+      D. ConcurrentModificationException  
 
 ```java
  private static void task1() {
@@ -70,10 +70,10 @@ exception продекларирован
 
 # Что будет?
 
-A. Ошибка компиляции
-B. Вылетитс исключением
-C. 3
-D. Что−то другое
+      A. Ошибка компиляции
+      B. Вылетитс исключением
+      C. 3
+      D. Что−то другое
 
 ```java
 private static void task3() {
@@ -89,10 +89,10 @@ private static void task3() {
 
 # Что произойдёт после выполнения?
 
-A. Мапы поменяются местами
-B. Обе станут олдскульными
-C. Обе стануткак надо
-D. Поучитесь программировать! Это вообще не скомпилируется!
+      A. Мапы поменяются местами
+      B. Обе станут олдскульными
+      C. Обе стануткак надо
+      D. Поучитесь программировать! Это вообще не скомпилируется!
 
 ```java
 private static void task4() {
@@ -119,10 +119,10 @@ private static void task4() {
 
 # Одинаково ли сработают три способа?
 
-A. Все ответы будут одинаковые
-B. Будет два разных ответа
-C. Будет три разных ответа
-D. Будетчетыре разных ответа
+      A. Все ответы будут одинаковые
+      B. Будет два разных ответа
+      C. Будет три разных ответа
+      D. Будетчетыре разных ответа
 
 ```java
 
@@ -194,10 +194,10 @@ static void test(Object obj) {
 
 # Что выведет
 
-A. ПРИВЕТ/ПРИВЕТ  
-B. ПРИВЕТ/HELLO   
-C. HELLO/ПРИВЕТ   
-D. HELLO/HELLO
+      A. ПРИВЕТ/ПРИВЕТ  
+      B. ПРИВЕТ/HELLO   
+      C. HELLO/ПРИВЕТ   
+      D. HELLO/HELLO
 
 ```java
 public class SupplierExample {
@@ -227,10 +227,10 @@ public class SupplierExample {
 
 # Что произойдёт?
 
-A. ConcurrentModificationException
-B. ArrayIndexOutOfBoundsException
-C. NullPointerException
-D. Успешно завершится
+         A. ConcurrentModificationException
+         B. ArrayIndexOutOfBoundsException
+         C. NullPointerException
+         D. Успешно завершится
 
 ```
 List<String> list = new ArrayList<>(Arrays.asList("Arne", "Chuck", "Slay"));

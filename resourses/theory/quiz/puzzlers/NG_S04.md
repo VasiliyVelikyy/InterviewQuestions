@@ -1,11 +1,11 @@
 <https://www.youtube.com/watch?v=7PnYBYL9pnc>
 
-A. Первый компилируется,
-второй нет  
-B. Второй компилируется,
-первый нет  
-C. Оба компилируются    
-D. Наркоманству – бой!
+    A. Первый компилируется,
+    второй нет  
+    B. Второй компилируется,
+    первый нет  
+    C. Оба компилируются    
+    D. Наркоманству – бой!
 
 ```java 
 class This {
@@ -50,10 +50,10 @@ class This {
 }
 ```
 
-A. Runtime Exception
-B. 4
-C. 8
-D. Не скомпилируется (да, я тормоз)
+    A. Runtime Exception
+    B. 4
+    C. 8
+    D. Не скомпилируется (да, я тормоз)
 
 Ответ с.
 Null- 4 символа+ this 4 символа.
@@ -98,12 +98,12 @@ public static void main(String[] args) {
 
 ```
 
-A.Первый компилируется,
-второй нет
-B. Второй компилируется,
-первый нет
-C.Оба компилируются
-D.Наркоманству – бой!
+    A.Первый компилируется,
+    второй нет
+    B. Второй компилируется,
+    первый нет
+    C.Оба компилируются
+    D.Наркоманству – бой!
 
 Ответ А.
 ![pic4.png)](media/pic4.png)
@@ -114,10 +114,10 @@ D.Наркоманству – бой!
 
 # Что будет?
 
-A. Не скомпилируется
-B. Выдаст пустую строку  
-C. Выдаст 0  
-D. Упадёт с ClassCastException
+    A. Не скомпилируется
+    B. Выдаст пустую строку  
+    C. Выдаст 0  
+    D. Упадёт с ClassCastException
 
 ```java
 public class OrderCar {
@@ -149,10 +149,10 @@ public class OrderCar {
 
 в какой строчке будет предупреждение про unchecked:
 
-A.//1   
-B.//2   
-C.//3   
-D.Не будет
+    A.//1   
+    B.//2   
+    C.//3   
+    D.Не будет
 
 ответ - предупреждения не будет
 
@@ -168,10 +168,10 @@ public class Main {
 
 ```
 
-A.Зависнет на много лет
-B. Упадёт с IllegalMonitorStateException    
-C.Упадёт с IllegalArgumentException: timeout value is negative  
-D.Упадёт с InterruptedException
+    A.Зависнет на много лет
+    B. Упадёт с IllegalMonitorStateException    
+    C.Упадёт с IllegalArgumentException: timeout value is negative  
+    D.Упадёт с InterruptedException
 
 Ответ C;
 
@@ -189,11 +189,11 @@ private static void doubleWtf(Double wtf1, Double wtf2) {
 
 ```
 
-A. Double.NaN и Double.NaN  
-B. Double.NaN и любой double    
-C. 0.0 и -0.0   
-D. Любой double и null  
-E. Ничего
+    A. Double.NaN и Double.NaN  
+    B. Double.NaN и любой double    
+    C. 0.0 и -0.0   
+    D. Любой double и null  
+    E. Ничего
 
 Ответ С
 
@@ -209,11 +209,11 @@ System.out.println(set.size());
 
 ```
 
-A. 0
-B. 1
-C. 32
-D. 33
-E. Упадёт с исключением
+    A. 0
+    B. 1
+    C. 32
+    D. 33
+    E. Упадёт с исключением
 
 ответ - 32
 если из символа вычитать инт- то символ приведеться тоже к инту в итоге будет число соотвевтующее символу, а в хешсете
@@ -236,10 +236,10 @@ final var snow = true ? targaryens * lannisters : starks; //char
 System.out.println(snow); 
 ```
 
-A. 2    
-B. 25   
-C. 1    
-D. 50
+    A. 2    
+    B. 25   
+    C. 1    
+    D. 50
 
 Ответ A
 Особенность в приведении после тернарного оператора, после операций targaryens * lannisters : starks
