@@ -189,22 +189,16 @@ Java. Так же мы познакомились с phantom ссылками, �
 Это означает, что Java сохраняет и повторно использует строки, когда это возможно. В основном это верно для строковых
 литералов. Например:
 
-```java
+```
 
 String localPrefix = "297"; //1
 String prefix = "297"; //2
 
-if(prefix ==localPrefix)
-        {
-        System.out.
-
-println("Strings are equal");
+if(prefix ==localPrefix){
+    System.out.println("Strings are equal");
 }
-        else
-        {
-        System.out.
-
-println("Strings are different");
+ else {
+     System.out.println("Strings are different");
 }
 Строка localPrefix = «297» ; // 1
 
