@@ -577,3 +577,170 @@ UPDATE table_name SET column_name = 'kek' WHERE column_value = 404;
 
 В общем, база данных – это хранилище для всех данных и объектов, а схема – это контейнер для подмножества этих объектов,
 обеспечивающий организацию и разделение задач.
+
+# Какие существуют подходы при работе с базой данных в java
+
+JDBC - это стандарт доступа к базам данных, JPA - это стандарт персистентности, Hibernate - это реализующий его ORM,
+Spring Data - это механизм организации репозиториев, а репозиторий - это абстракция, лежащая на уровень выше ORM. То
+есть Spring Data использует Hibernate, а Hibernate использует JDBC.
+
+### Прямое использование JDBC (Java Database Connectivity)
+
+* Преимущества:
+  Полный контроль над SQL-запросами.
+  Гибкость и производительность.
+  Поддержка большинства реляционных баз данных.
+* Недостатки:
+  Требует много кода для реализации стандартных операций (например, открытие/закрытие соединений, обработка
+  исключений).
+  Увеличение вероятности ошибок при работе с SQL.
+
+```java
+    import java.sql.*;
+
+public class JDBCExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/mydatabase";
+        String user = "username";
+        String password = "password";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             Statement stmt = conn.createStatement()) {
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM my_table");
+            while (rs.next()) {
+                System.out.println(rs.getString("column_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+  ```
+
+### JPA (Java Persistence API)
+
+JPA — это стандартная спецификация для работы с объектно-реляционными базами данных. JPA абстрагирует работу с базой
+данных и позволяет работать с данными как с объектами.
+
+* Преимущества:
+  Высокий уровень абстракции.
+  Легкость в работе с базой данных (не нужно вручную писать SQL).
+  Управление транзакциями и сессиями.
+  Поддержка кэширования.
+* Недостатки:
+  Потенциально меньшая производительность по сравнению с использованием чистого SQL, особенно для сложных запросов.
+  Необходимость конфигурации и понимания принципов ORM.
+  Пример использования JPA с аннотациями:
+  Принцип работы: JPA использует концепцию объектно-реляционного отображения (ORM), где таблицы базы данных
+  отображаются
+  на Java классы, а строки — на объекты
+
+```java
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String username;
+
+    // getters and setters
+}
+```
+
+```
+    // В сервисе
+    EntityManager em = emf.createEntityManager();
+    em.getTransaction().begin();
+    User user = new User();
+    user.setUsername("john_doe");
+    em.persist(user);
+    em.getTransaction().commit();
+```
+
+#### Hibernate
+
+Hibernate — это одна из самых популярных реализаций JPA. Он предоставляет расширенные возможности для работы с базами
+данных, такие как кэширование, ленивую загрузку (lazy loading) и т.д.
+
+Принцип работы: Hibernate использует объектно-реляционное отображение, как и JPA, но предлагает дополнительные
+возможности, такие как кэширование, более гибкие механизмы настройки и поддержки различных баз данных.
+
+* Преимущества:
+  Расширение возможностей JPA.
+  Поддержка сложных объектов и связей.
+  Кэширование на уровне сессии и второго уровня.
+  Удобное создание и выполнение запросов через HQL (Hibernate Query Language) или Criteria API.
+* Недостатки:
+  Может быть сложнее в освоении по сравнению с обычным JPA.
+  Иногда Hibernate может генерировать неэффективные SQL-запросы, если его неправильно настроить.
+  Пример использования Hibernate:
+    ```
+    Session session = sessionFactory.openSession();
+    Transaction tx = session.beginTransaction();
+    User user = new User("john_doe");
+    session.save(user);
+    tx.commit();
+    session.close();
+    ```
+
+### Spring Data JPA
+
+Основное понятие в Spring Data — это репозиторий. Это несколько интерфейсов которые используют JPA Entity для
+взаимодействия с ней. Так например интерфейс
+public interface CrudRepository<T, ID extends Serializable> extends Repository<T, ID>
+обеспечивает основные операции по поиску, сохранения, удалению данных (CRUD операции
+Spring Data JPA — это абстракция на основе JPA, предоставляемая фреймворком Spring, которая упрощает создание
+репозиториев для работы с базой данных.
+
+* Принцип работы: Spring Data JPA генерирует реализацию репозиториев на основе интерфейсов, что позволяет легко
+  интегрировать работу с базой данных в приложении.
+* Преимущества:
+  Упрощает работу с репозиториями.
+  Автоматическая реализация CRUD-операций.
+  Встроенная поддержка запросов на основе именования методов (например, findByUsername).
+* Недостатки:
+  Меньше гибкости в сложных случаях, когда требуется использовать сложные SQL-запросы.
+  Пример использования Spring Data JPA:
+
+```java
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    List<User> findByUsername(String username);
+}
+
+```
+
+### Микс SQL и ORM: MyBatis
+
+MyBatis — это гибридный подход между ORM и прямым использованием SQL. Позволяет писать SQL-запросы вручную, но при этом
+автоматически мапить результаты на объекты Java.
+
+* Преимущества:
+  Гибкость в написании SQL-запросов.
+  Поддержка сложных запросов.
+  Меньше магии, чем в ORM.
+* Недостатки:
+  Требует настройки XML или аннотаций для маппинга.
+  Нужно больше кода по сравнению с ORM.
+
+```java
+
+
+Копировать код
+
+@Mapper
+public interface MyMapper {
+    @Select("SELECT * FROM my_table WHERE id = #{id}")
+    MyEntity findById(int id);
+}
+
+// Использование:
+@Autowired
+private MyMapper myMapper;
+
+MyEntity entity = myMapper.findById(1);
+```
