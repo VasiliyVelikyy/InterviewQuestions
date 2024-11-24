@@ -10,6 +10,12 @@ public class Airplane {
         this.flight = flight;
     }
 
+    public Airplane(String name, Wing leftWing, Wing rightWing) {
+        this.name = name;
+        this.leftWing = leftWing;
+        this.rightWing = rightWing;
+    }
+
     public class Wing {
         private String color, model;
 
@@ -22,9 +28,9 @@ public class Airplane {
     }
 
     public static void main(String[] args) {
-        // Airplane airplane=new Airplane("airbus-456",
-        //                                new Airplane.Wing("black","a3"),
-        //                                new Airplane.Wing("black","a3"));
+//        Airplane airplane = new Airplane("airbus-456",
+//                new Airplane.Wing("black", "a3"),
+//                new Airplane.Wing("black", "a3"));
         //неполучиться отдельно создать внутренний класс
     }
 
