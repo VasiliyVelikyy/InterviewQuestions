@@ -1,3 +1,4 @@
+![img.png](media/img.png)
 ## Connection
 
 Итак, у нас есть JDBC драйвер, есть JDBC API. Как мы помним, JDBC расшифровывается как Java DataBase Connectivity.

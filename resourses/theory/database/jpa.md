@@ -29,6 +29,18 @@ entityManager.getTransaction().begin();
 entityManager.getTransaction().commit();
 ```
 
+# Отличие JPA от JDBC
+Главный критерий выбора: 
+* JPA используется для ORM и удобства работы, 
+* а JDBC – для производительности и полного контроля над SQL.
+```
+JPA: entityManager.persist(user);
+JDBC:
+Java
+
+// Работа JDBC с SQL-запросами
+connection.prepareStatement("INSERT INTO users ...").executeUpdate();
+```
 ### Что такое hibernate ?
 
 Спросят с вероятностью 19%
