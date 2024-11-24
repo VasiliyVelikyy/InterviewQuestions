@@ -474,7 +474,7 @@ b2.addActionListener(new ActionListener() {
 JButton b2 = new JButton("Click");
 b2.addActionListener(e -> System.out.println("Кнопка нажата!"));
 ```
-
+Любой анонимный внутренний класс может за один раз реализовать только один интерфейс. Так же, за один раз можно либо расширить класс, либо реализовать интерфейс, но не одновременно.
 # Что такое Generic
 
 https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/resourses/theory/core/generics.md

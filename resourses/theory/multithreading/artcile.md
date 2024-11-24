@@ -44,3 +44,9 @@
 * CountDownLatch
 > <https://sysout.ru/countdownlatch/>   
 > <https://sky.pro/wiki/java/ispolzovanie-count-down-latch-v-mnogopotochnosti-java/>    
+
+* Внутренние классы
+> Aннонимный класс
+> <https://itproger.com/course/java/17> 
+> <https://javarush.ru/groups/posts/2193-anonimnihe-klassih>  
+
