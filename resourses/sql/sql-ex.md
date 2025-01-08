@@ -541,7 +541,7 @@ Outcome(code, point, date, out)
                      GROUP BY c.class
                      HAVING COUNT(all_ships.name) = 2)
     ```
-    ![img.png](examples/pics/img.png)
+    ![img.png](articles/pics/img.png)
 
 38) Найдите страны, имевшие когда-либо классы обычных боевых кораблей ('bb') и имевшие когда-либо классы крейсеров ('
     bc').
