@@ -771,6 +771,8 @@ public static void main(String[] args) {
 
 ## PECS
 
+<https://github.com/VasiliyVelikyy/InterviewQuestions/blob/main/java/sandbox/my_examples/generics/pecs/PECSExample2.java>
+![img.png](media/img7.png)
 Producer Extends, Consumer Super. Его суть:
 
 Коллекции с wildcards и ключевым словом extends — это producers (производители, генераторы), они лишь предоставляют
