@@ -1,3 +1,7 @@
+* Ссылки
+> <https://sky.pro/media/java-peredacha-po-znacheniyu-ili-po-ssylke/#>
+> <https://habr.com/ru/companies/otus/articles/551026/>
+
 * Лямбда выражение
 > <https://itsobes.ru/JavaSobes/chem-anonimnyi-vnutrennii-klass-otlichaetsia-ot-liambdy/>
 > <https://habr.com/ru/company/haulmont/blog/432418/>
@@ -25,3 +29,4 @@
 > <https://javarush.com/groups/posts/1083-vvedenie-v-funkcionaljhnihe-interfeysih>
 > <https://javarush.com/groups/posts/592-java-functional-interfaces>
 > <https://javarush.com/groups/posts/2866-funkcionaljhnihe-interfeysih-v-java>
+

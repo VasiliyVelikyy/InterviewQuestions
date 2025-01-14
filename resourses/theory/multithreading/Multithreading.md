@@ -1,4 +1,5 @@
 ## Monitor. Mutex. Semaphore
+
 Семафор — это средство синхронизации доступа к ресурсу.
 Ограничивает количество потоков, которые могут войти в заданный участок кода
 Использует счетчик потоков, который указывает, сколько потоков одновременно могут получать доступ к общему ресурсу.
@@ -6,12 +7,18 @@
 Мьютекс — поле для синхронизации потоков. Есть у каждого объекта в Java.
 Это простейший Семафор, который может находиться в одном из двух состояний: true или false.
 
-Монитор — это дополнительная надстройка над Мьютексом.
-Блокирует объект именно монитор
+```
+Object myObject = new Object();
+Mutex mutex = myObject.getMutex();
+mutex.free();
+```
 
+Монитор — это дополнительная надстройка над Мьютексом.
+Блокирует объект именно монитор.
 Когда один тред заходит внутрь synchronized блока кода, JVM тут же блокирует Mьютекс синхронизированного объекта.
 Больше ни один тред не сможет зайти в этот блок, пока текущий тред его не покинет.
-Как только первый поток выйдет из блока synchronized, Mьютекс автоматически разблокируется и будет свободен для захвата следующим потоком.
+Как только первый поток выйдет из блока synchronized, Mьютекс автоматически разблокируется и будет свободен для захвата
+следующим потоком.
 Когда Mьютекс занят – новый поток будет ждать, пока он не освободится.
 
 ## ExecutorService
@@ -190,8 +197,10 @@ public interface Callable<V> {
 ```
 
 Давайте рассмотрим вычисление факториала числа:
+
+```java
 public class FactorialTask implements Callable<Integer> {
-int number;
+    int number;
 
     // стандартные конструкторы
 
@@ -199,23 +208,27 @@ int number;
         int factor = 1;
         // ...
 
-        for(int count = number; count > 1; count--) {
+        for (int count = number; count > 1; count--) {
             factor = factor * count;
         }
-
         return factor;
     }
-
 }
+```
+
 Результат метода call() возвращается в Future объекте:
+
+```java
+
 @Test
-public void whenTaskSubmitted_ThenFutureResultObtained(){
-FactorialTask task = new FactorialTask(7);
-Future<Integer> future = executorService.submit(task);
+public void whenTaskSubmitted_ThenFutureResultObtained() {
+    FactorialTask task = new FactorialTask(7);
+    Future<Integer> future = executorService.submit(task);
 
     assertEquals(5040, future.get().intValue());
-
 }
+```
+
 Обработка исключений
 Давайте посмотрим, насколько они подходят для обработки исключений.
 Runnable
@@ -223,17 +236,20 @@ Runnable
 Callable
 Метод call() Callable содержит блок throws Exception, поэтому мы можем легко распространять дальше проверяемые
 исключения:
+
+```java
 public class FactorialTask implements Callable<Integer> {
 
     public Integer call() throws InvalidParamaterException {
 
-        if(number < 0) {
+        if (number < 0) {
             throw new InvalidParamaterException("This should be positive");
         }
-
     }
-
 }
+
+```
+
 В случае запуска Callable объекта с использованием ExecutorService исключения собираются в Future объекте. Мы можем
 проверить его, выполнив вызов метода Future.get().
 
@@ -386,7 +402,7 @@ public void addToQueue(String item) {
 ## Методы wait и notify
 
 Методы wait и notify
-Последнее обновление: 27.04.2018
+Последнее обновление:
 
 Иногда при взаимодействии потоков встает вопрос о извещении одних потоков о действиях других. Например, действия одного
 потока зависят от результата действий другого потока, и надо как-то известить один поток, что второй поток произвел
