@@ -10,8 +10,8 @@ class EarlierBinding {
         Collection collection = new HashSet();
         statPrint(collection); //раннее связывание
 
-//        EarlierBinding earlier = new EarlierBinding();
-//        earlier.print(collection); // позднее связывание
+        EarlierBinding earlier = new EarlierBinding();
+        earlier.print(collection); // позднее связывание
     }
 
 
@@ -27,16 +27,16 @@ class EarlierBinding {
         System.out.println("hashSet");
     }
 
-//    public void print(Collection collection) {
-//        System.out.println("collection");
-//    }
+    public void print(Collection collection) {
+        System.out.println("collection");
+    }
 
-//    public void print(Set collection) {
-//        System.out.println("set");
-//    }
-//
-//    public void print(HashSet collection) {
-//        System.out.println("hashSet");
-//    }
+    public void print(Set collection) {
+        System.out.println("set");
+    }
+
+    public void print(HashSet collection) {
+        System.out.println("hashSet");
+    }
 
 }

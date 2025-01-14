@@ -1,5 +1,8 @@
 ### Generics
 
+— это механизм, который позволяет создавать классы, интерфейсы и методы с параметрическими типами. То есть вместо
+использования конкретных типов данных (например, Integer, String и т. д.)
+
 — это параметризованные типы. Особые средства языка Java для реализации обобщённого программирования: особого
 подхода к описанию данных и алгоритмов, позволяющего работать с различными типами данных без изменения их описания.
 
@@ -461,12 +464,349 @@ T! :)
 
 ## Типизированные методы (Generic Methods)
 
-## Wildcard-огрнаичение
+## Wildcard-ограничение
 
 Wildcard позволил нам легко уместить нужную логику с привязкой к конкретным типам в один мето
 <? extends Number> только Number и наследники ,
 <? super Integer>-только integer  и родитель, 
 <?>-без ограничения 
+
+```java
+public class Main {
+
+    public static void main(String[] args) {
+
+        String str = new String("Test!");
+
+        Object obj = str;
+
+        List<String> strings = new ArrayList<String>();
+
+        List<Object> objects = strings;
+    }
+}
+```
+
+Мы видим две очень похожие ситуации. В первой из них мы пытаемся привести объект String к типу Object. Никаких проблем с
+этим не возникает, все работает как надо.
+
+Но вот во второй ситуации компилятор выдает ошибку. Хотя, казалось бы, мы делаем то же самое. Просто теперь мы
+используем коллекцию из нескольких объектов.
+
+Но почему возникает ошибка? Какая, по сути, разница — приводим мы один объект String к типу Object или 20 объектов?
+
+Между объектом и коллекцией объектов есть важное различие.
+
+```Если класс B является наследником класса А, то Collection<B> при этом — не наследник Collection<A>```
+
+Именно по этой причине мы не смогли привести наш List<String> к List<Object>. String является наследником Object, но
+List<String> не является наследником List<Object>.
+
+Интуитивно это выглядит не очень логично. Почему именно таким принципом руководствовались создатели языка?
+
+Давай представим, что здесь компилятор не выдавал бы нам ошибку:
+
+```
+List<String> strings = new ArrayList<String>();
+List<Object> objects = strings;
+```
+
+В этом случае, мы бы могли, например, сделать следующее:
+
+```
+objects.add(new Object());
+String s = strings.get(0);
+```
+
+Поскольку компилятор не выдал нам ошибок и позволил создать ссылку List<Object> object на коллекцию строк strings, можем
+добавить в strings не строку, а просто любой объект Object!
+
+Таким образом, мы лишились гарантии того, что в нашей коллекции находятся только указанные в дженерике объекты String.
+То есть, мы потеряли главное преимущество дженериков — типобезопасность.
+
+И раз компилятор позволил нам все это сделать, значит, мы получим ошибку только во время исполнения программы, что
+всегда намного хуже, чем ошибка компиляции.
+
+Чтобы предотвратить такие ситуации, компилятор выдает нам ошибку:
+
+```List<Object> objects = strings;```
+
+...и напоминает, что List<String> — не наследник List<Object>.
+
+Это железное правило работы дженериков, и его нужно обязательно помнить при их использовании.
+
+Поехали дальше.
+
+Допустим, у нас есть небольшая иерархия классов:
+Допустим, у нас есть небольшая иерархия классов:
+
+```java
+
+public class Animal {
+
+    public void feed() {
+
+        System.out.println("Animal.feed()");
+    }
+}
+
+public class Pet extends Animal {
+
+    public void call() {
+
+        System.out.println("Pet.call()");
+    }
+}
+
+public class Cat extends Pet {
+
+    public void meow() {
+
+        System.out.println("Cat.meow()");
+    }
+}
+
+```
+
+Во главе иерархии стоят просто Животные: от них наследуются Домашние Животные. Домашние Животные делятся на 2 типа —
+Собаки и Кошки.
+
+А теперь представь, что нам нужно создать простой метод iterateAnimals(). Метод должен принимать коллекцию любых
+животных (Animal, Pet, Cat, Dog), перебирать все элементы, и каждый раз выводить что-нибудь в консоль.
+
+Давай попробуем написать такой метод:
+
+```java
+
+public static void iterateAnimals(Collection<Animal> animals) {
+
+    for (Animal animal : animals) {
+
+        System.out.println("Еще один шаг в цикле пройден!");
+    }
+}
+
+```
+
+Казалось бы, задача решена!
+
+Однако, как мы недавно выяснили, List<Cat>, List<Dog> или List<Pet> не являются наследниками List<Animal>!
+
+Поэтому при попытке вызвать метод iterateAnimals() со списком котиков мы получим ошибку компилятора:
+
+import java.util.*;
+
+```java
+
+public class Main3 {
+
+
+    public static void iterateAnimals(Collection<Animal> animals) {
+
+        for (Animal animal : animals) {
+
+            System.out.println("Еще один шаг в цикле пройден!");
+        }
+    }
+
+    public static void main(String[] args) {
+
+
+        List<Cat> cats = new ArrayList<>();
+        cats.add(new Cat());
+        cats.add(new Cat());
+        cats.add(new Cat());
+        cats.add(new Cat());
+
+
+        iterateAnimals(cats);
+    }
+}
+
+```
+
+Ситуация выглядит не очень хорошо для нас! Получается, нам придется писать отдельные методы для перебора всех видов
+животных?
+
+На самом деле нет, не придется :) И в этом нам как раз помогут wildcards!
+
+Мы решим задачу в рамках одного простого метода, используя вот такую конструкцию:
+
+```java
+
+public static void iterateAnimals(Collection<? extends Animal> animals) {
+
+    for (Animal animal : animals) {
+
+        System.out.println("Еще один шаг в цикле пройден!");
+    }
+}
+
+```
+
+Это и есть wildcard. Точнее, это первый из нескольких типов wildcard — “extends” (другое название — Upper Bounded
+Wildcards).
+
+О чем нам говорит эта конструкция? Это значит, что метод принимает на вход коллекцию объектов класса Animal либо
+объектов любого класса-наследника Animal (? extends Animal).
+
+Иными словами, метод может принять на вход коллекцию Animal, Pet, Dog или Cat — без разницы.
+
+Давай убедимся что это работает:
+
+```java
+public static void main(String[] args) {
+
+    List<Animal> animals = new ArrayList<>();
+    animals.add(new Animal());
+    animals.add(new Animal());
+
+    List<Pet> pets = new ArrayList<>();
+    pets.add(new Pet());
+    pets.add(new Pet());
+
+    List<Cat> cats = new ArrayList<>();
+    cats.add(new Cat());
+    cats.add(new Cat());
+
+    List<Dog> dogs = new ArrayList<>();
+    dogs.add(new Dog());
+    dogs.add(new Dog());
+
+    iterateAnimals(animals);
+    iterateAnimals(pets);
+    iterateAnimals(cats);
+    iterateAnimals(dogs);
+}
+```
+
+```
+Вывод в консоль:
+
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+Еще один шаг в цикле пройден!
+```
+
+Мы создали в общей сложности 4 коллекции и 8 объектов, и в консоли ровно 8 записей. Все отлично работает! :)
+
+Wildcard позволил нам легко уместить нужную логику с привязкой к конкретным типам в один метод. Мы избавились от
+необходимости писать отдельный метод для каждого вида животных. Представь, сколько методов у нас было бы, если бы наше
+приложение использовалось в зоопарке или ветеринарной клинике :)
+А теперь давай рассмотрим другую ситуацию.
+
+Наша иерархия наследования останется неизменной: класс верхнего уровня Animal, чуть ниже — класс домашних животных Pet,
+а на следующем уровне — Cat и Dog.
+
+Теперь тебе нужно переписать метод iretateAnimals() таким образом, чтобы он мог работать с любым типом животных, кроме
+собак.
+
+То есть он должен принимать на вход Collection<Animal>, Collection<Pet> или Collection<Cat>, но не должен работать с
+Collection<Dog>.
+
+Как мы можем этого добиться?
+
+Кажется, перед нами опять замаячила перспектива писать отдельный метод для каждого типа :/
+
+Как иначе объяснить компилятору нашу логику?
+
+А сделать это можно очень просто! Здесь нам снова придут на помощь wildcards. Но на этот раз мы воспользуемся другим
+типом — “super” (другое название — Lower Bounded Wildcards).
+
+```java
+public static void iterateAnimals(Collection<? super Cat> animals) {
+
+    for (int i = 0; i < animals.size(); i++) {
+        System.out.println("Еще один шаг в цикле пройден!");
+    }
+}
+```
+
+Здесь принцип похож.
+
+Конструкция <? super Cat> говорит компилятору, что метод iterateAnimals() может принимать на вход коллекцию объектов
+класса Cat либо любого другого класса-предка Cat.
+
+Под это описание в нашем случае подходят сам класс Cat, его предок — Pets, и предок предка — Animal.
+
+Класс Dog не вписывается в это ограничение, и поэтому попытка использовать метод со списком List<Dog> приведет к ошибке
+компиляции:
+
+```java
+
+public static void main(String[] args) {
+
+    List<Animal> animals = new ArrayList<>();
+    animals.add(new Animal());
+    animals.add(new Animal());
+
+    List<Pet> pets = new ArrayList<>();
+    pets.add(new Pet());
+    pets.add(new Pet());
+
+    List<Cat> cats = new ArrayList<>();
+    cats.add(new Cat());
+    cats.add(new Cat());
+
+    List<Dog> dogs = new ArrayList<>();
+    dogs.add(new Dog());
+    dogs.add(new Dog());
+
+    iterateAnimals(animals);
+    iterateAnimals(pets);
+    iterateAnimals(cats);
+
+
+    iterateAnimals(dogs);
+}
+
+```
+
+Наша задача решена, и снова wildcards оказались крайне полезными :)
+
+## PECS
+
+Producer Extends, Consumer Super. Его суть:
+
+Коллекции с wildcards и ключевым словом extends — это producers (производители, генераторы), они лишь предоставляют
+данные.
+Коллекции с wildcards и ключевым словом super — это consumers (потребители), они принимают данные, но не отдают их.
+
+| Тип ограничения      | 	Что можно читать	                      | Что можно записывать                       |
+|----------------------|-----------------------------------------|--------------------------------------------|
+| <? extends SomeType> | 	Объекты SomeType и всех его супертипов | 	Только null                               |
+| <? super SomeType>   | 	Объекты типа Object                    | 	Объекты типа SomeType и всех его подтипов |
+
+```java
+public static void main(String[] args) {
+
+    //extends - коллекция может состоять из объектов типа Number и всех его подтипов
+    //extends — это producers
+    List<? extends Number> producer = new ArrayList<>();
+    addElements1(producer);
+
+    //super - коллекция может иметь объекты типа Integer и всех супертипов — например, Number или Object
+    //super - это consumer
+    List<? super Integer> consumer = new ArrayList<>();
+    addElements2(consumer);
+
+}
+
+public static void addElements1(List<? extends Number> list) {
+    Number number = list.get(0); // это работает
+    list.add(1);// ошибка компиляции потому что он не знает точный тип элементов списка.
+}
+
+public static void addElements2(List<? super Integer> list) {
+    Number number = list.get(0); // ошибка компиляции потому что он не знает точный тип элементов списка
+    list.add(1); // это работает
+}
+```
 
 ## Bridge-метод
 
@@ -480,7 +820,9 @@ Wildcard позволил нам легко уместить нужную лог
 class Node<T> {
     public T data;
 
-    public Node(T data) {this.data = data;}
+    public Node(T data) {
+        this.data = data;
+    }
 
     public void setData(T data) {
         System.out.println("Node.setData");
@@ -489,7 +831,9 @@ class Node<T> {
 }
 
 class MyNode extends Node<Integer> {
-    public MyNode(Integer data) {super(data);}
+    public MyNode(Integer data) {
+        super(data);
+    }
 
     public void setData(Integer data) {
         System.out.println("MyNode.setData");
@@ -513,7 +857,9 @@ public class Example {
 public class Node {
     public Object data;
 
-    public Node(Object data) {this.data = data;}
+    public Node(Object data) {
+        this.data = data;
+    }
 
     public void setData(Object data) {
         System.out.println("Node.setData");
@@ -523,7 +869,9 @@ public class Node {
 
 public class MyNode extends Node {
 
-    public MyNode(Integer data) {super(data);}
+    public MyNode(Integer data) {
+        super(data);
+    }
 
     public void setData(Integer data) {
         System.out.println("MyNode.setData");

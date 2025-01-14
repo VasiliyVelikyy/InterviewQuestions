@@ -4,6 +4,7 @@
 * Generics
 > <https://javarush.com/groups/posts/2004-teorija-dzhenerikov-v-java-ili-gde-na-praktike-stavitjh-skobki>
 > <https://javarush.com/groups/posts/2315-stiranie-tipov>
+> <https://skillbox.ru/media/code/dzheneriki-v-java-dlya-tekh-kto-postarshe/#stk-5>
 
 * Раннее и позднее связывание
 > <https://itsobes.com/ru/java/mozhno-li-pereopredelit-staticheskii-metod/>
