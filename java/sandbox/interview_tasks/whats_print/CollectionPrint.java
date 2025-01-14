@@ -9,7 +9,7 @@ class CollectionPrint {
 //        listWhatHappened2();
 //        listWhatHappened3();
 //        listWhatHappened4();
-
+        rightWayForRemove();
     }
 
     //что выведет?
@@ -80,6 +80,21 @@ class CollectionPrint {
         for (String x : list) {
             if (x.equals("Slay")) { // если удалить 3 или 1 элемент, будет ConcurrentModificationException
                 list.remove(x);
+            }
+        }
+    }
+
+    private static void rightWayForRemove() {
+        // все удаления нужно делать через итератор либо через методы стрима
+        List<String> list = new ArrayList<>(Arrays.asList("Arne", "Chuck", "Slay"));
+        list.removeIf(x -> x.equals("Chuck")); //Внутренне removeIf  использует Iterator для итерации по списку и сопоставления элементов с помощью предиката.
+
+        list = new ArrayList<>(Arrays.asList("Arne", "Chuck", "Slay"));
+        var iter = list.iterator();
+
+        while (iter.hasNext()) {
+            if (iter.next().equals("Chuck")) {
+                iter.remove();
             }
         }
     }
