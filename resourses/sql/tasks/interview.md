@@ -1,13 +1,15 @@
 ![img.png](img.png)
 
 ```sql
-SELECT Name 
+SELECT c.NAME, COUNT(a.CLIENT_ID)
 FROM Client c
-LEFT JOINT Account a ON c.id = a.id
-GROUP BY  (c.name, a.client.id)
-HAVING COUNT(name) < 5 OR COUNT(name)=0
+         LEFT JOIN Accounts a ON c.ID = a.CLIENT_ID
+GROUP BY c.name, a.CLIENT_ID
+HAVING COUNT(a.CLIENT_ID) < 5
+   AND COUNT(a.CLIENT_ID) >= 0
 
 ```
+
 LEFT JOINT - применяем чтобы показать клиентов, у которых может не быть счетов
-требование агрегатной функции count  мы вызываем, у name
+требование агрегатной функции count мы вызываем, у name
 так как для Name нет агригат функции, необходимо перечислит в GROUP BY 
