@@ -1,8 +1,6 @@
 package sandbox.interview_tasks.whats_print;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 class CollectionPrint {
     public static void main(String[] args) {
@@ -25,6 +23,28 @@ class CollectionPrint {
         //то же самое
         Set<String> leaders =new HashSet<>(Arrays.asList("Stalin","Lenin","Che Gevara"));
         System.out.println("leaders= "+leaders.toString());
+    }
+
+    //Что произойдет и почему
+    private static void listWhatHappened(){
+        List<String> list=new ArrayList<>(Arrays.asList("A","B","C"));
+
+        list.stream().forEach(x->{
+            if(x.equals("C")){
+                list.remove(x);
+            }
+        });
+    }
+
+    // А в этом случае?
+    private static void listWhatHappened2(){
+        List<String> list=new ArrayList<>(Arrays.asList("A","B","C"));
+
+        list.stream().forEach(x->{
+            if(x.equals("A")){
+                list.remove(x);
+            }
+        });
     }
 
 }
