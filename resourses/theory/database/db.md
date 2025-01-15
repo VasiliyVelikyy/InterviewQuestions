@@ -716,10 +716,6 @@ MyBatis — это гибридный подход между ORM и прямы�
   Нужно больше кода по сравнению с ORM.
 
 ```java
-
-
-Копировать код
-
 @Mapper
 public interface MyMapper {
     @Select("SELECT * FROM my_table WHERE id = #{id}")

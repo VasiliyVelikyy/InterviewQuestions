@@ -1,5 +1,7 @@
 package sandbox;
 
+import java.util.HashSet;
+
 public class Test {
     public static void main(String[] args) {
         int x=0;
@@ -15,8 +17,8 @@ public class Test {
                 int xa= ((5 + 5 * 4)% 10) / 4;
                 System.out.println(xa);
 
-
-
+HashSet set=new HashSet();
+Integer inte;
         }
     }
 }
