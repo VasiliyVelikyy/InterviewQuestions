@@ -30,3 +30,10 @@
 > <https://javarush.com/groups/posts/592-java-functional-interfaces>
 > <https://javarush.com/groups/posts/2866-funkcionaljhnihe-interfeysih-v-java>
 
+* Абстрактный класс
+> <>
+
+* Модификаторы доступа
+> <https://javarush.ru/groups/posts/1988-modifikatorih-dostupa-private-protected-default-public>
+> <https://metanit.com/java/tutorial/3.3.php>
+
