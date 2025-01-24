@@ -32,3 +32,7 @@
 * Уровни изоляции
 
 > -<https://habr.com/ru/articles/469415/>](https://habr.com/ru/articles/469415/)
+
+* Hibernate
+> -<https://javarush.com/quests/lectures/questhibernate.level09.lecture02>
+> -<https://javarush.com/groups/posts/hibernate-java>
