@@ -27,6 +27,9 @@ class CollectionPrint {
         //то же самое
         Set<String> leaders = new HashSet<>(Arrays.asList("Stalin", "Lenin", "Che Gevara"));
         System.out.println("leaders= " + leaders.toString());
+        //если у объекта не предопределен toString() то возвращается строка в виде: MyClass@1b6d3586  где MyClass- это имя класса объекта.
+        // @ — разделитель.
+        //1b6d3586 — хэшкод объекта в шестнадцатеричном формате, возвращаемый методом hashCode().
     }
 
     //Что произойдет и почему

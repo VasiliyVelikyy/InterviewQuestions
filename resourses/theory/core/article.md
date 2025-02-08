@@ -51,3 +51,5 @@
 > <https://metanit.com/java/tutorial/3.3.php>
 > <https://javarush.ru/groups/posts/591-vot-tak-final>
 
+* Heap,Stack
+> <https://javarush.com/groups/posts/609-prisvaivanie-i-inicializacija-v-java>
