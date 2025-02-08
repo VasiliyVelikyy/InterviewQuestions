@@ -1,3 +1,4 @@
+
 * Ссылки
 
 > <https://sky.pro/media/java-peredacha-po-znacheniyu-ili-po-ssylke/#>
