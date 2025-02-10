@@ -4,6 +4,11 @@ public class DebitCard {
     private String clientId;
     private int clientBalance;
 
+    public DebitCard(String clientId, int clientBalance) {
+        this.clientId = clientId;
+        this.clientBalance = clientBalance;
+    }
+
     public String getClientId() {
         return clientId;
     }

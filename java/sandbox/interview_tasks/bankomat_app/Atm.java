@@ -9,27 +9,21 @@ public class Atm {
     private int commonBalance;
     private Map<Banknote, Integer> mapOfBanknote;
 
-
     public void fill(int amount) {
-
         commonBalance = +amount;
     }
 
     public Map<Banknote, Integer> takeOf(int amount, DebitCard card) {
         int currenClientBalance = card.getClientBalance();
-        if (currenClientBalance < amount) {
-            throw new IllegalArgumentException("Not enough client money");
-        } else if (commonBalance < amount) {
-            throw new IllegalArgumentException("ATM has not enough money");
-        }
-
-        commonBalance -= amount;
-        card.setClientBalance(currenClientBalance - amount);
+        checkClientBalance(amount, currenClientBalance);
+        checkAtmBalance(amount, currenClientBalance);
+        checkMultiple(amount);
+        int tempAmount = amount;
 
         Map<Banknote, Integer> takeOfAmount = new HashMap<>();
-
+        Banknote banknote = null;
         for (var entry : mapOfBanknote.entrySet()) {
-            Banknote banknote = entry.getKey();
+            banknote = entry.getKey();
             Integer banknoteAmount = entry.getValue();
 
             if (banknoteAmount > 0) {
@@ -42,17 +36,41 @@ public class Atm {
             }
         }
 
+        if (amount > 0 && banknote != null) {
+            throw new IllegalArgumentException("Not enough banknotes=" + amount + " Please enter sum multiple banknotes=" + banknote.getNominate());
+        }
+        commonBalance -= tempAmount;
+        card.setClientBalance(currenClientBalance - tempAmount);
         return takeOfAmount;
     }
 
+    private void checkMultiple(int amount) {
+        if (amount % 100 != 0) {
+            throw new IllegalArgumentException("Please enter amount multiple of 100");
+        }
+    }
+
+    private void checkAtmBalance(int amount, int currenClientBalance) {
+        if (commonBalance < amount) {
+            throw new IllegalArgumentException("ATM has not enough money");
+        }
+    }
+
+    private void checkClientBalance(int amount, int currenClientBalance) {
+        if (currenClientBalance < amount) {
+            throw new IllegalArgumentException("Not enough client money");
+        }
+    }
 
     public void authClient(DebitCard card, String pincode) throws IllegalAccessException {
         serverAtm.authClient(card, pincode);
     }
 
 
-    public void initializeBanknotes(TreeMap<Banknote, Integer> mapOfBanknote) {
-        this.mapOfBanknote = mapOfBanknote;
+    public void initializeBanknotes(Map<Banknote, Integer> mapOfBanknote) {
+        Map<Banknote, Integer> treeMap = new TreeMap<>((o1, o2) -> Integer.compare(o2.getNominate(), o1.getNominate()));
+        treeMap.putAll(mapOfBanknote);
+        this.mapOfBanknote = treeMap;
         commonBalance = mapOfBanknote.entrySet()
                 .stream()
                 .mapToInt(pair -> pair.getKey().getNominate() * pair.getValue())
