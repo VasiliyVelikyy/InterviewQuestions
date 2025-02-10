@@ -11,4 +11,12 @@ public class DebitCard {
     public int getClientBalance() {
         return clientBalance;
     }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public void setClientBalance(int clientBalance) {
+        this.clientBalance = clientBalance;
+    }
 }
