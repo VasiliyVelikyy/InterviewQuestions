@@ -1,6 +1,7 @@
 package sandbox.interview_tasks.bankomat_app;
 
 public enum Banknote {
+    TEST(50),
     ONE_HUNDRED(100),
     TWO_HUNDRED(200),
     FIVE_HUNDRED(500),

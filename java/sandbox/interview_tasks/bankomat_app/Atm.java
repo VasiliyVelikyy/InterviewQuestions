@@ -1,19 +1,81 @@
 package sandbox.interview_tasks.bankomat_app;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Atm {
     private ServerAtm serverAtm;
     private int commonBalance;
     private Map<Banknote, Integer> mapOfBanknote;
 
-    public void fill(int amount) {
-        commonBalance = +amount;
+    public void fill(List<Banknote>amount) {
+        amount.forEach(money-> mapOfBanknote.merge(money,1, Integer::sum));
     }
 
-    public Map<Banknote, Integer> takeOf(int amount, DebitCard card) {
+    public Map<Banknote, Integer> takeOfDynamicAlgorithm(int targetSum, DebitCard card){
+        List<Integer> banknotes =  mapOfBanknote.entrySet()
+                .stream()
+                .flatMap(entry->{
+            return Stream.generate(() -> entry.getKey().getNominate())
+                    .limit(entry.getValue());
+        }).collect(Collectors.toList());
+
+        Map<Integer, Integer> sums = new HashMap<>();
+        sums.put(0, 0); //начальное значение
+
+        // Основной цикл по купюрам
+        for (int banknot : banknotes) {
+            Map<Integer, Integer> newSums = new HashMap<>(); // Новые суммы, которые можно получить с текущей купюрой
+
+            // Обходим все существующие суммы
+            for (Map.Entry<Integer, Integer> entry : sums.entrySet()) {
+                int sum = entry.getKey();
+                int newSum = sum + banknot;
+
+                // Если новая сумма превышает целевую, пропускаем
+                if (newSum > targetSum) {
+                    continue;
+                }
+
+                // Если новой суммы еще нет в sums, добавляем её в newSums
+                if (!sums.containsKey(newSum)) {
+                    newSums.put(newSum, banknot);
+                }
+            }
+
+            // Добавляем новые суммы в sums
+            sums.putAll(newSums);
+
+            // Если целевая сумма достигнута, выходим из цикла
+            if (sums.containsKey(targetSum)) {
+                break;
+            }
+        }
+
+        // Проверяем, можно ли выдать сумму
+        if (!sums.containsKey(targetSum)) {
+            throw new IllegalArgumentException("Невозможно выдать сумму " + targetSum + " с доступными купюрами.");
+        } else {
+            // Восстанавливаем набор купюр
+            List<Integer> resultBanknotes = new ArrayList<>();
+            int remaining = targetSum;
+
+            while (remaining > 0) {
+                int bill = sums.get(remaining);
+                resultBanknotes.add(bill);
+                remaining -= bill;
+            }
+            // Выводим результат
+            System.out.println("Сумма " + targetSum + " может быть выдана следующими купюрами: " + resultBanknotes);
+            var map= resultBanknotes.stream().collect(Collectors.groupingBy(elem->elem,Collectors.counting()));
+            return null;
+        }
+
+    }
+
+    // не работает с наминалами которые при делении не дают целых чисел
+    public Map<Banknote, Integer> takeOfLargeAlgorithm(int amount, DebitCard card) {
         int currenClientBalance = card.getClientBalance();
         checkClientBalance(amount, currenClientBalance);
         checkAtmBalance(amount, currenClientBalance);
@@ -37,7 +99,7 @@ public class Atm {
         }
 
         if (amount > 0 && banknote != null) {
-            throw new IllegalArgumentException("Not enough banknotes=" + amount + " Please enter sum multiple banknotes=" + banknote.getNominate());
+            throw new IllegalArgumentException("Not enough banknotes for amount=" + amount + " banknotes=" + banknote.getNominate());
         }
         commonBalance -= tempAmount;
         card.setClientBalance(currenClientBalance - tempAmount);

@@ -2,6 +2,7 @@ package sandbox.interview_tasks.bankomat_app;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +11,7 @@ import static sandbox.interview_tasks.bankomat_app.Banknote.*;
 class AtmTest {
 
     @Test
-    void takeOf() {
+    void takeOfLargeAlgorithm() {
         Atm atm = new Atm();
 
         atm.initializeBanknotes((Map.of(
@@ -21,13 +22,13 @@ class AtmTest {
                 TWO_THOUSAND, 200,
                 FIVE_THOUSAND, 7000)));
 
-        var answer = atm.takeOf(10200, new DebitCard("1", 500000));
+        var answer = atm.takeOfLargeAlgorithm(10200, new DebitCard("1", 500000));
         assertEquals(Map.of(FIVE_THOUSAND, 2,
                 TWO_HUNDRED, 1), answer);
     }
 
     @Test
-    void takeOfNotEnoughBanknotes() {
+    void takeOfLargeAlgorithmNotEnoughBanknotes() {
         Atm atm = new Atm();
 
         atm.initializeBanknotes((Map.of(ONE_THOUSAND, 1,
@@ -36,11 +37,50 @@ class AtmTest {
 
         IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () ->  atm.takeOf(2500, new DebitCard("1", 500000)),
-                "Not enough banknotes=500 Please enter sum multiple banknotes=1000"
+                () ->  atm.takeOfLargeAlgorithm(2500, new DebitCard("1", 500000)),
+                "Not enough banknotes=500"
         );
 
         assertTrue(thrown.getMessage().contains("Not enough banknotes"));
 
+    }
+
+    @Test
+    void brokeLargeAlgorithm() {
+        Atm atm = new Atm();
+
+        atm.initializeBanknotes((Map.of(
+                TWO_HUNDRED, 3,
+                FIVE_HUNDRED, 5)));
+
+
+        IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () ->  atm.takeOfLargeAlgorithm(600, new DebitCard("1", 500000)),
+                "Not enough banknotes for amount=100 banknotes=200"
+        );
+
+        assertTrue(thrown.getMessage().contains("Not enough banknotes"));
+
+    }
+
+
+    @Test
+    void takeOfDynamicAlg() {
+        Atm atm = new Atm();
+        atm.initializeBanknotes((Map.of(ONE_THOUSAND, 3,
+                FIVE_HUNDRED, 2,
+                TWO_HUNDRED,3)));
+        atm.takeOfDynamicAlgorithm(3200, new DebitCard("1", 500000));
+    }
+
+    @Test
+    void fill() {
+        Atm atm = new Atm();
+        atm.initializeBanknotes((Map.of(ONE_THOUSAND, 3,
+                FIVE_HUNDRED, 2,
+                TWO_HUNDRED,3)));
+        atm.fill(Arrays.asList(FIVE_HUNDRED,
+                ONE_HUNDRED,TEST));
     }
 }
