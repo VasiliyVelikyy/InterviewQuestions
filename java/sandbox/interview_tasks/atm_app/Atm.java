@@ -1,4 +1,4 @@
-package sandbox.interview_tasks.bankomat_app;
+package sandbox.interview_tasks.atm_app;
 
 import java.util.*;
 import java.util.stream.Collectors;

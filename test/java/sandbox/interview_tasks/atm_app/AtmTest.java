@@ -1,4 +1,4 @@
-package sandbox.interview_tasks.bankomat_app;
+package sandbox.interview_tasks.atm_app;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static sandbox.interview_tasks.bankomat_app.Banknote.*;
+import static sandbox.interview_tasks.atm_app.Banknote.*;
 
 class AtmTest {
 

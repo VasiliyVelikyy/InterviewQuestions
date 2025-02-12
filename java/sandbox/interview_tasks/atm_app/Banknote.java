@@ -1,4 +1,4 @@
-package sandbox.interview_tasks.bankomat_app;
+package sandbox.interview_tasks.atm_app;
 
 public enum Banknote {
     TEST(50),
@@ -9,7 +9,7 @@ public enum Banknote {
     TWO_THOUSAND(2000),
     FIVE_THOUSAND(5000);
 
-    private int nominate;
+    private final int nominate;
 
     Banknote(int nominate) {
         this.nominate = nominate;
