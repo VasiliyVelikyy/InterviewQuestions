@@ -1,4 +1,4 @@
-package ru.moskalev.sandbox.spring_ripper;
+package ru.moskalev.sandbox.spring_ripper.postprocessors;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
+import ru.moskalev.sandbox.spring_ripper.annotations.InjectRandomInt;
 
 import java.lang.reflect.Field;
 
