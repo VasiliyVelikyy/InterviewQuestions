@@ -623,4 +623,141 @@ public enum ThreadSafeSingleton {
 BeanDefinition — это специальный интерфейс, через который можно получить доступ к метаданным будущего бина. В
 зависимости от того, какая у вас конфигурация, будет использоваться тот или иной механизм парсирования конфигурации (
 xml, groove, аннотации и тд).
-> <https://habr.com/ru/articles/222579/>    
+> <https://habr.com/ru/articles/222579/>
+
+# Жизненный цикл бина
+
+![img.png](media/img.png)
+
+Beans – центральный объект заботы Spring Framework. За кулисами фреймворка с ними происходит множество процессов. Во
+многие из них можно вмешаться, добавив собственную логику в разные этапы жизненного цикла. Через следующие этапы
+проходит каждый отдельно взятый бин:
+
+1. Инстанцирование объекта. Техническое начало жизни бина, работа конструктора его класса;
+
+2. Установка свойств из конфигурации бина, внедрение зависимостей;
+
+3. Нотификация aware-интерфейсов. BeanNameAware, BeanFactoryAware и другие. Мы уже писали о таких интерфейсах ранее.
+   Технически, выполняется системными подтипами BeanPostProcessor, и совпадает с шагом 4;
+
+4. Пре-инициализация – метод postProcessBeforeInitialization() интерфейса BeanPostProcessor;
+
+5. Инициализация. Разные способы применяются в таком порядке:
+   • Метод бина с аннотацией @PostConstruct из стандарта JSR-250 (рекомендуемый способ);
+   • Метод afterPropertiesSet() бина под интерфейсом InitializingBean;
+   • Init-метод. Для отдельного бина его имя устанавливается в параметре определения initMethod. В xml-конфигурации
+   можно установить для всех бинов сразу, с помощью default-init-method;
+
+6. Пост-инициализация – метод postProcessAfterInitialization() интерфейса BeanPostProcessor.
+
+# Пример использования BeanPostProcessor
+
+Например у нас есть какое то свойство, которое небходимо использовать во многих местах. И чтобы не писать постоянную
+реализацию
+можно ввести аннотацию, которую будет обрабатывать BeanPostProcessor и устанавливать в бин. В spring потрошителе
+приводили пример
+свойства рандомного числа. Написали аннотацию @InjectRandomInt над int переменной. И реализовали BeanPostProcessor, и
+каждый раз до создания бина, инициализировалось рандомне число.
+Или иницифлизация логгера
+Использование BeanPostProcessor на примере журналирования
+Сегодня я хочу рассказать, как можно сделать инициализацию логгера в классе с использованием аннотаций и
+BeanPostProcessor
+
+Очень часто мы инициализируем логгер следующим образом:
+
+```java
+public class MyClass {
+    private static final Logger LOG = LoggerFactory.getLogger(MyClass.class);
+}
+```
+
+Я покажу, как сделать, чтобы можно было писать вот так:
+
+```java
+
+@Log
+private Logger LOG;
+Первым делом
+нам нужно
+объявить аннотацию:
+
+@Retention(RUNTIME)
+@Target(FIELD)
+@Documented
+public @interface Log {
+    String category() default "";
+}
+
+А вторым
+делом,
+написать собственный
+BeanPostProcessor,
+который бы
+устанавливал нам
+логгер:
+
+        import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
+import org.springframework.util.ReflectionUtils;
+
+@Component
+public class LoggerPostProcessor implements BeanPostProcessor {
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) {
+        return bean;
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(final Object bean, final String beanName) {
+        ReflectionUtils.doWithFields(bean.getClass(), new FieldProcessor(bean, beanName), new LoggerFieldFilter());
+        return bean;
+    }
+
+    private static class FieldProcessor implements ReflectionUtils.FieldCallback {
+        private final Object bean;
+        private final String beanName;
+
+        private FieldProcessor(Object bean, String beanName) {
+            this.bean = bean;
+            this.beanName = beanName;
+        }
+
+        @Override
+        public void doWith(Field field) throws IllegalAccessException {
+            Log loggerAnnot = field.getAnnotation(Log.class);
+
+            // Sanity check if annotation is on the field with correct type.
+            if (field.getType().equals(org.slf4j.Logger.class)) {
+                // As user can override logger category - check if it was done.
+                String loggerCategory = loggerAnnot.category();
+                if (StringUtils.isBlank(loggerCategory)) {
+                    // use default category instead.
+                    loggerCategory = bean.getClass().getName();
+                }
+                Logger logger = LoggerFactory.getLogger(loggerCategory);
+                ReflectionUtils.makeAccessible(field);
+                field.set(bean, logger);
+            } else {
+                throw new IllegalArgumentException(
+                        "Unable to set logger on field '" + field.getName() + "' in bean '" + beanName +
+                                "': field should have class " + Logger.class.getName());
+            }
+        }
+    }
+
+    private static class LoggerFieldFilter implements ReflectionUtils.FieldFilter {
+        @Override
+        public boolean matches(Field field) {
+            Log logger = field.getAnnotation(Log.class);
+            return null != logger;
+        }
+    }
+}
+```
+
+Если вы используете не sfl4j, а, например, log4j, или commons-logging, то нужно немного поправить код внутри метода
+doWith
+<https://uthark.github.io/2012/04/20/beanpostprocessor/>
