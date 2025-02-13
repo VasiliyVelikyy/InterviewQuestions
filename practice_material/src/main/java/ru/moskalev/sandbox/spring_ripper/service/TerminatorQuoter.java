@@ -1,7 +1,9 @@
 package ru.moskalev.sandbox.spring_ripper.service;
 
 import org.springframework.stereotype.Component;
+import ru.moskalev.sandbox.spring_ripper.annotations.DeprecatedClass;
 import ru.moskalev.sandbox.spring_ripper.annotations.InjectRandomInt;
+import ru.moskalev.sandbox.spring_ripper.annotations.PostProxy;
 import ru.moskalev.sandbox.spring_ripper.annotations.Profiling;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +12,7 @@ import javax.annotation.PreDestroy;
 //Здесь показан жизненный цикл бина
 @Profiling
 @Component
+@DeprecatedClass(newImpl = T1000.class)
 public class TerminatorQuoter implements Quoter {
 
     //2 этап -пре-инициализацитя (отработка beanPostProcessor before)
@@ -45,6 +48,18 @@ public class TerminatorQuoter implements Quoter {
         for (int i = 0; i < repeat; i++) {
             System.out.println("message= " + message);
         }
+    }
 
+    @PostProxy
+    public void phase3(){
+        System.out.println("Phase 3");
+    }
+
+    public void setRepeat(int repeat) {
+        this.repeat = repeat;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
