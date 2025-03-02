@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>2.7.1</version>
     </parent>
 
     <groupId>ru.moskalev</groupId>
@@ -15,15 +15,19 @@
     <version>1.0.0-SNAPSHOT</version>
     <name>interviewQuestions</name>
     <description>Questions that i worked</description>
+    <packaging>pom</packaging>
+
+
     <modules>
         <module>theory_material</module>
         <module>practice_material</module>
     </modules>
 
-    <packaging>pom</packaging>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <java.version>11</java.version>
+        <lombok.version>1.18.36</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

@@ -1,12 +1,14 @@
 package ru.moskalev.sandbox.spring_ripper.service;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+
 import org.springframework.stereotype.Component;
 import ru.moskalev.sandbox.spring_ripper.annotations.DeprecatedClass;
 import ru.moskalev.sandbox.spring_ripper.annotations.InjectRandomInt;
 import ru.moskalev.sandbox.spring_ripper.annotations.PostProxy;
 import ru.moskalev.sandbox.spring_ripper.annotations.Profiling;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 //Здесь показан жизненный цикл бина
 @Profiling
