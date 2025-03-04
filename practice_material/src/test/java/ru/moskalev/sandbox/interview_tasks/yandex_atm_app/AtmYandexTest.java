@@ -35,11 +35,29 @@ class AtmYandexTest {
     @Test
     void takeOf3() {
         sdk = new StubSdk();
-        AtmYandex atm = new AtmYandex(sdk);
+        AtmYandex atm = new AtmYandex(new Sdk() {
+            @Override
+            public int countBanknotes(int banknote) {
+                if(banknote == 100) return 100;
+
+                else return 0;
+            }
+
+            @Override
+            public void moveBanknoteToDispenser(int banknote, int count) {
+
+            }
+
+            @Override
+            public void openDispenser() {
+
+            }
+        });
+
+
         atm.initBankomat(List.of(200, 1000));
+        //потому что банкнот только 2, 1000 и 200 рублей
+        assertThrows(IllegalArgumentException.class,()-> atm.takeOf(1100));
 
-        var answer = atm.takeOf(1100);
-
-        assertEquals(10, answer.get(100));
     }
 }

@@ -7,15 +7,12 @@ package ru.moskalev.sandbox.interview_tasks.yandex_atm_app;
 class StubSdk implements Sdk {
     @Override
     public int countBanknotes(int banknote) {
-//        if(banknote == 50)return 5;
-//        else if(banknote == 100)return 10;
-//        else if(banknote == 500)return 2;
-//        else if(banknote == 1000)return 4;
-//        else return 0;
-
-        if(banknote == 100)return 100;
-
+        if(banknote == 50)return 5;
+        else if(banknote == 100)return 10;
+        else if(banknote == 500)return 2;
+        else if(banknote == 1000)return 4;
         else return 0;
+
     }
 
     @Override
