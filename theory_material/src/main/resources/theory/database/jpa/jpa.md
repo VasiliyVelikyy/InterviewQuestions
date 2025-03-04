@@ -518,15 +518,7 @@ private List<Books> otmEntities = new ArrayList<Books>();
 мой пример в тестовом проекте
 <https://github.com/VasiliyVelikyy/ExampleProject/blob/master/src/Info.md>
 
-### Проблема n+1 в Hibernate
 
-мой пример в тестовом проекте
-<https://github.com/VasiliyVelikyy/ExampleProject/blob/master/src/Info.md>
-
-#### Ссылки на статьи
-
-<https://habr.com/ru/companies/otus/articles/529692/>
-<https://habr.com/ru/articles/714704/>
 
 ### LazyInitializationException что за проблема.
 
