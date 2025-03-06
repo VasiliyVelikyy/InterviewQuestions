@@ -12,8 +12,10 @@ jobs:
   check-remote-url:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout repository with SSH
         uses: actions/checkout@v3
+        with:
+          ssh-key: ${{ secrets.GITHUB_SSH_KEY }} # Используем SSH-ключ
 
       - name: Check for HTTPS URLs in remote
         id: check-https
