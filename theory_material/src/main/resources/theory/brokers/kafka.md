@@ -39,6 +39,7 @@ spring:
       auto-offset-reset: earliest
 ```
 
+
 В этом случае groupId может быть сгенерирован как ```my-service-group```
 
 #### Как указать groupId явно
