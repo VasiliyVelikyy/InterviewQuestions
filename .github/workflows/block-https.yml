@@ -1,0 +1,31 @@
+name: Block HTTPS URLs in Remote
+
+on:
+  push:
+    branches:
+      - '**' # Проверять все ветки
+  pull_request:
+    branches:
+      - '**' # Проверять все ветки
+
+jobs:
+  check-remote-url:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check for HTTPS URLs in remote
+        id: check-https
+        run: |
+          # Получаем URL удалённого репозитория
+          REMOTE_URL=$(git remote get-url origin)
+
+          # Проверяем, содержит ли URL "https://"
+          if echo "$REMOTE_URL" | grep -q "https://"; then
+            echo "::error::HTTPS URLs are not allowed in remote. Please use SSH."
+            echo "Current remote URL: $REMOTE_URL"
+            exit 1
+          else
+            echo "Remote URL is valid: $REMOTE_URL"
+          fi
