@@ -17,7 +17,6 @@
     <description>Questions that i worked</description>
     <packaging>pom</packaging>
 
-
     <modules>
         <module>theory_material</module>
         <module>practice_material</module>
