@@ -31,8 +31,8 @@
   - <https://habr.com/ru/articles/597797/>
   - <https://javarush.com/quests/lectures/questspring.level01.lecture64/>
 
-
-<>
+* Spring configuration 
+  - <https://javarush.com/quests/lectures/questspringboot.level01.lecture02>
 
 
 <>
