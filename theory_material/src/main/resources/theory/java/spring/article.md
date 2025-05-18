@@ -3,10 +3,13 @@
 * Spring-потрошитель, часть 1
   - <https://www.youtube.com/watch?v=BmBr5diz8WA>
 
-*  Otus Готовимся к собеседованию по Spring: следующий уровень (не)стандартных вопросов// «Spring Framework»
-  - <http://youtube.com/watch?v=muxMz8OSbPU>
-  - <https://www.youtube.com/watch?v=nle_HB3NCGI>
-  - <https://www.youtube.com/watch?v=_BwEMt6FP04>
+*  Otus
+   * Готовимся к собеседованию по Spring
+     - <http://youtube.com/watch?v=muxMz8OSbPU>
+     - <https://www.youtube.com/watch?v=nle_HB3NCGI>
+     - <https://www.youtube.com/watch?v=_BwEMt6FP04>
+   * DAO
+     - <https://www.youtube.com/watch?v=VUMUVKFrAt8>
 
 # Статьи
 
