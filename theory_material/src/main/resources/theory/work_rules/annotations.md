@@ -113,3 +113,16 @@ public class CityDto {
 
 ### Enum валидатор
 <https://www.baeldung.com/javax-validations-enums>
+
+
+### @ConditionalOnMissingBean
+
+Ставиться над бинами - показывает условие.
+```java
+@ConditionalOnMissingBean(name = "commercialService")
+@Bean
+public CommercialService commercialService() {
+    return new CommercialService();
+}
+```
+Если нет бина в контексте среди beanDefinition с именем commercialService, то данный код сработает и создастся commercialService.
