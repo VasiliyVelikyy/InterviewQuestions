@@ -59,7 +59,7 @@ Spring Boot позволяет делать так называемые авто
 
 ### Как в boot происходит поиск бинов?
 
-В большинстве случаев в Spring Boot аннотация `@ComponentScan` не требуется , потому что она уже неявно применяется
+В большинстве случаев в Spring Boot аннотация `@ComponentScan` не требуется, потому что она уже неявно применяется
 через `@SpringBootApplication` .
 
 Что делает `@ComponentScan`?
@@ -80,17 +80,30 @@ Spring Boot позволяет делать так называемые авто
 ```
 
 ##### Boot Так же как и чистый спринг поддерживает xml конфигурацию.
-Spring Boot предпочитает конфигурацию на основе Java. Хотя можно использовать SpringApplication и с XML-исходниками, мы обычно рекомендуем, чтобы основным исходником был один класс, аннотированный @Configuration. Обычно класс, определяющий метод main, является подходящим кандидатом на роль основной @Configuration.
+
+Spring Boot предпочитает конфигурацию на основе Java. Хотя можно использовать SpringApplication и с XML-исходниками, мы
+обычно рекомендуем, чтобы основным исходником был один класс, аннотированный @Configuration. Обычно класс, определяющий
+метод main, является подходящим кандидатом на роль основной @Configuration.
 
 ##### Импорт дополнительных конфигурационных классов
-Вам не нужно помещать все аннотации @Configuration в один класс. Можно использовать аннотацию @Import для импорта дополнительных классов конфигурации. Кроме того, можно использовать аннотацию @ComponentScan для автоматического сбора всех компонентов Spring, включая классы с аннотацией @Configuration.
+
+Вам не нужно помещать все аннотации @Configuration в один класс. Можно использовать аннотацию @Import для импорта
+дополнительных классов конфигурации. Кроме того, можно использовать аннотацию @ComponentScan для автоматического сбора
+всех компонентов Spring, включая классы с аннотацией @Configuration.
 
 ##### Импорт XML-конфигурации
-Если в обязательном порядке требуется использовать конфигурацию на основе XML, мы рекомендуем все же начать с класса, помеченного аннотацией @Configuration. Затем можно использовать аннотацию @ImportResource для загрузки конфигурационных XML-файлов.
+
+Если в обязательном порядке требуется использовать конфигурацию на основе XML, мы рекомендуем все же начать с класса,
+помеченного аннотацией @Configuration. Затем можно использовать аннотацию @ImportResource для загрузки конфигурационных
+XML-файлов.
 
 ##### Автоконфигурация
-Автоконфигурация в Spring Boot пытается автоматически конфигурировать ваше приложение Spring на основе добавленных jar-зависимостей. Например, если HSQLDB находится в вашем classpath, но вы не сконфигурировали вручную никаких бинов для подключения к базе данных, то Spring Boot автоматически сконфигурирует резидентную базу данных.
-Необходимо явно согласиться на автоконфигурацию, добавив аннотации @EnableAutoConfiguration или @SpringBootApplication в один из ваших классов с аннотацией @Configuration.
+
+Автоконфигурация в Spring Boot пытается автоматически конфигурировать ваше приложение Spring на основе добавленных
+jar-зависимостей. Например, если HSQLDB находится в вашем classpath, но вы не сконфигурировали вручную никаких бинов для
+подключения к базе данных, то Spring Boot автоматически сконфигурирует резидентную базу данных.
+Необходимо явно согласиться на автоконфигурацию, добавив аннотации @EnableAutoConfiguration или @SpringBootApplication в
+один из ваших классов с аннотацией @Configuration.
 
 ### А как в чистом спринге происходит поиск бинов?
 
@@ -132,4 +145,285 @@ Spring Boot предпочитает конфигурацию на основе 
 
        </beans>
       ```
+
+### Какие бины автоконфигурирет boot?
+
+#### DataSource
+
+в чистом спринге нам нужно
+
+```java
+
+@Bean
+public DataSource dataSource() {
+    return DataSourceBuilder.create()
+            .url("jdbc:mysql://localhost:3306/mydb")
+            .username("root")
+            .password("pass")
+            .build();
+}
+```
+
+В Spring Boot: добавление в файл properties
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=root
+spring.datasource.password=pass
+```
+
+#### DataSourceTransactionManager
+
+Назначение: управление транзакциями для JDBC.
+В Spring Boot: создаётся автоматически, если есть DataSource.
+В чистом Spring: нужно создавать вручную или подключать Spring Transaction.
+
+```java
+
+@Bean
+public PlatformTransactionManager transactionManager(DataSource dataSource) {
+    return new DataSourceTransactionManager(dataSource);
+}
+```
+
+#### JdbcTemplate
+
+Назначение: упрощает работу с SQL-запросами.
+В Spring Boot: создаётся автоматически, если есть DataSource.
+В чистом Spring: нужно добавлять вручную.
+
+```java
+
+@Bean
+public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    return new JdbcTemplate(dataSource);
+}
+```
+
+#### EntityManagerFactory
+
+В Spring Boot: создаётся через `HibernateJpaAutoConfiguration`, если есть зависимости JPA и БД.
+В чистом Spring: нужно ручное настройка через `LocalContainerEntityManagerFactoryBean`.
+
+#### MultipartResolver
+
+Назначение: обработка загрузки файлов (multipart/form-data).
+В Spring Boot: создаётся автоматически при наличии зависимости spring-web.
+В чистом Spring: нужно добавлять вручную:
+
+```java
+
+@Bean
+public MultipartResolver multipartResolver() {
+    return new StandardServletMultipartResolver();
+}
+```
+
+#### EmbeddedServletContainerCustomizer
+
+Назначение: настройка встроенного сервера (например, порт, SSL, параметры соединения).
+В Spring Boot: доступен по умолчанию.
+Пример использования для бута:
+
+```java
+
+@Bean
+public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
+    return factory -> factory.setPort(8081);
+}
+```
+
+1. Для чистого спринга нужно настроить параметры сервлет-контейнера.
+   Всё делается вручную через web.xml или программно при развертывании на сервере , например, Tomcat, Jetty и т.д.
+   Дескриптор развертывания.
+   ```xml
+   <!-- web.xml -->
+   <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+                                http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+   
+       <display-name>My Spring App</display-name>
+   
+       <!-- Можно настроить параметры контекста -->
+       <context-param>
+           <param-name>contextConfigLocation</param-name>
+           <param-value>/WEB-INF/applicationContext.xml</param-value>
+       </context-param>
+   
+       <!-- Listener для загрузки Spring контекста -->
+       <listener>
+           <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+       </listener>
+   
+       <!-- DispatcherServlet -->
+       <servlet>
+           <servlet-name>dispatcher</servlet-name>
+           <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+           <init-param>
+               <param-name>contextConfigLocation</param-name>
+               <param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+           </init-param>
+           <load-on-startup>1</load-on-startup>
+       </servlet>
+   
+       <servlet-mapping>
+           <servlet-name>dispatcher</servlet-name>
+           <url-pattern>/</url-pattern>
+       </servlet-mapping>
+   
+   </web-app>
+   ```
+   Но в web.xml нельзя настроить порт, SSL, таймауты соединения и т.д.
+
+   Приложение упаковывается в war и засовываеться в папку webapps tomcat или используеться сервер jetty (обычно
+   зависимость embedded)
+2. Через server.xml / context.xml если вы используете Tomcat
+   ```xml
+   <Server port="8005" shutdown="SHUTDOWN">
+     <Service name="Catalina">
+       <Connector port="8080" protocol="HTTP/1.1"
+                  connectionTimeout="20000"
+                  redirectPort="8443" />
+       ...
+     </Service>
+   </Server>
+   ```
+   Там можно:
+
+   Менять порт (port)
+   Настраивать SSL
+   Управлять пулом потоков
+   И многое другое
+3. Программная настройка (если запускаешь свой embedded сервер)
+   Если ты хочешь запустить embedded Tomcat/Jetty вручную (как в Spring Boot), но без Spring Boot, то можно сделать это
+   вручную:
+   Пример: Embedded Tomcat в чистом Spring
+   ```java
+   public class MyTomcatApp {
+       public static void main(String[] args) throws Exception {
+           Tomcat tomcat = new Tomcat();
+           tomcat.setPort(8081); // ← изменение порта
+           tomcat.getConnector(); // автоматически создаёт Connector
+   
+           Context context = tomcat.addContext("/", new File(".").getAbsolutePath());
+   
+           // Регистрация DispatcherServlet
+           Tomcat.addServlet(context, "dispatcher", new DispatcherServlet(new MyWebConfig()));
+           context.addServletMappingDecoded("/*", "dispatcher");
+   
+           tomcat.start();
+           tomcat.getServer().await();
+       }
+   }
+   
+   @Configuration
+   @EnableWebMvc
+   @ComponentScan("com.example.app")
+   class MyWebConfig implements WebMvcConfigurer {}
+   ```
+
+#### Jackson2ObjectMapperBuilderCustomizer
+
+Назначение: кастомизация сериализации JSON.
+В Spring Boot: применяется ко всем REST-контроллерам.
+Например, изменить формат даты:
+
+```java
+
+@Bean
+public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+    return builder -> builder.simpleDateFormat("yyyy-MM-dd");
+}
+```
+
+#### ErrorController
+
+Назначение: обработка ошибок и вывод страницы/JSON при ошибках.
+В Spring Boot: реализуется через BasicErrorController.
+В чистом Spring: нужно писать свой @ControllerAdvice или @ExceptionHandler.
+
+#### PropertyPlaceholderConfigurer / PropertySourcesPlaceholderConfigurer
+
+Назначение: чтение значений из application.properties.
+В Spring Boot: уже настроен по умолчанию.
+В чистом Spring: нужно добавлять вручную:
+
+```java
+
+@Bean
+public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+}
+```
+
+#### DispatcherServlet
+Если используем Spring MVC
+DispatcherServlet — это главный контроллер в Spring MVC , который принимает все HTTP-запросы и направляет их к нужным контроллерам, обработчикам и представлениям.
+1. через web.xml (традиционный способ) как показано выше `org.springframework.web.servlet.DispatcherServlet` И отдельный файл: dispatcher-servlet.xml
+   ```xml
+   <!-- dispatcher-servlet.xml -->
+   <beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mvc="http://www.springframework.org/schema/mvc"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="
+              http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans.xsd
+              http://www.springframework.org/schema/context
+              http://www.springframework.org/schema/context/spring-context.xsd
+              http://www.springframework.org/schema/mvc
+              http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+   
+       <!-- Сканирование контроллеров -->
+       <context:component-scan base-package="com.example.controller"/>
+   
+       <!-- Включаем поддержку @RequestMapping -->
+       <mvc:annotation-driven/>
+   
+       <!-- Настройка ViewResolver -->
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+           <property name="prefix" value="/WEB-INF/views/"/>
+           <property name="suffix" value=".jsp"/>
+       </bean>
+   
+   </beans>
+   ```
+2. Через Java-based конфигурацию (без web.xml)
+```java
+public class MyWebAppInitializer implements WebApplicationInitializer {
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        // Создаем контекст для DispatcherServlet
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(WebConfig.class);
+
+        // Регистрируем DispatcherServlet
+        ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+    }
+}
+```
+
+```java
+@Configuration
+@EnableWebMvc
+@ComponentScan("com.example.controller")
+public class WebConfig implements WebMvcConfigurer {
+
+    @Bean
+    public ViewResolver viewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/views/");
+        resolver.setSuffix(".jsp");
+        return resolver;
+    }
+}
+```
+### Как увидеть все автоконфигурации?
+
+`mvn spring-boot:run -Dspring-boot.run.arguments="--debug"`
+Или добавь в application.properties: `debug=true`
+
       
