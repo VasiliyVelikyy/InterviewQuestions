@@ -133,6 +133,39 @@ Spring Boot стартеры — это специальные зависимо�
   Для оптимизации сетевых запросов используются другие техники и инструменты, такие как кэширование, использование
   асинхронных вызовов и другие подходы.
 
+Транзакция в спринге многие думаю работает так - спринг в байткод добаваляет методы открытия конекшена, выполнения метода , коммита или ролбеа и закрытия конекшона. На самом деле там механизм проксирования. Работа в рантайме - создается доп класс прокси (оберкти), где есть вызова траназкшнл менеджера, вызов оригинального метода объекта и вызов опять менеджера для закрытия. Этот код обернет наш метод помеченный @Transactional до и после - это так называемые АСПЕКТЫ. Через него реализованы в спринге изменения нашего кода
+
+@Async- все работает асинхронно - спринг налету генерит новый класс. Гененирует тредпул, открываается новый поток который открывает метод в новом потоке. Спринг  - подменяет объекты. Это можно увидеть в дебаге - вызвав getclass, там будем имя класса который нам подменил спринг- который добавляет логику транзакции к нашей основной логики через дизайн паатерн Proxy.
+Еще один пример - когда есть стектрейс оишбки - куча вызовово объектов прокси. И лишь в середине где то на 2х строчках вызов нашего метода
+
+
+```text
+at org.hibernate.query.sql.internal.NativeSelectQueryPlanImpl.performList(NativeSelectQueryPlanImpl.java:135) ~[hibernate-core-6.6.5.Final.jar!/:6.6.5.Final]
+    at org.hibernate.query.sql.internal.NativeQueryImpl.doList(NativeQueryImpl.java:693) ~[hibernate-core-6.6.5.Final.jar!/:6.6.5.Final]
+    at org.hibernate.query.spi.AbstractSelectionQuery.list(AbstractSelectionQuery.java:143) ~[hibernate-core-6.6.5.Final.jar!/:6.6.5.Final]
+    at org.hibernate.query.Query.getResultList(Query.java:120) ~[hibernate-core-6.6.5.Final.jar!/:6.6.5.Final]
+    at ru.planningmediator.repository.MetricsRepository.getUniqueAddresses(MetricsRepository.java:80) ~[!/:0.0.2-SNAPSHOT]
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+    at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+    at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[?:?]
+    at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.2.jar!/:6.2.2]
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.2.jar!/:6.2.2]
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.2.jar!/:6.2.2]
+    at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.2.jar!/:6.2.2]
+    at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.2.jar!/:6.2.2]
+    at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.2.jar!/:6.2.2]
+    at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.2.jar!/:6.2.2]
+    at ru.vtb.dlvr.planningmediator.repository.MetricsRepository$$SpringCGLIB$$0.getUniqueAddresses(<generated>) ~[!/:0.0.2-SNAPSHOT]
+
+at ru.vtb.dlvr.planningmediator.service.monitoring.MetricService.collectMetrics(MetricService.java:53) ~[!/:0.0.2-SNAPSHOT]
+    at ru.vtb.dlvr.planningmediator.service.monitoring.MetricService.schedule(MetricService.java:32) ~[!/:0.0.2-SNAPSHOT]
+    at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+
+```
+
+наш вызов repository.MetricsRepository.getUniqueAddresses
+
 # Основное преимущество внедрения зависимостей (Dependency Injection, DI) в Spring Framework заключается в:
 
 Уменьшение связанности между компонентами
@@ -941,15 +974,5 @@ public class UserRepository {
 
 Здесь UserRepository — это бин, который работает с базой данных, поэтому используется @Repository.
 
-### Что такое Spring Boot?
 
-Spring Boot — мощный инструмент, который позволяет разработчикам быстро создавать приложения на основе Spring фреймворка
-прикладывая для этого минимум усилий
-Т.к. в данном фреймворке реализован принцип инверсии зависимостей, с его помощью можно легко настраивать и запускать
-приложения, используя встроенные компоненты, что делает Spring Boot популярным выбором среди разработчиков
-
-### Так, а Spring что такое?
-
-Spring — это фреймворк, реализующий принцип инверсии зависимостей и предоставляющий набор инструментов и библиотек,
-которые упрощают и ускоряют процесс разработки, позволяя сосредоточиться на бизнес-логике приложения.
-
+### 
