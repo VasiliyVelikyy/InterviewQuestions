@@ -2,6 +2,8 @@
 
 * Spring-потрошитель, часть 1
   - <https://www.youtube.com/watch?v=BmBr5diz8WA>
+  - <>
+  - <https://youtu.be/MPzmr3p3Cj8?si=91SAgsMIf7xJC-Rw>
 
 *  Otus
    * Готовимся к собеседованию по Spring
