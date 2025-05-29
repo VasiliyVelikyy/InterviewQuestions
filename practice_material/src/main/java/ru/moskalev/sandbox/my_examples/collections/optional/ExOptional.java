@@ -27,5 +27,7 @@ public class ExOptional {
         if(second != null) {
             result.addAll(second);
         }
+
+        System.out.println(result);
     }
 }
