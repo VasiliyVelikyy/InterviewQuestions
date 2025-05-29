@@ -9,8 +9,8 @@ public class IntStreamEx {
         // из массива сделать мапу, где ключ- индекс массива а значение- элемент массива
         String[] array = "Казань Москва Питер".trim().split(" ");
         Map<Integer, String> cityMap = IntStream
-                .range(0, array.length)
-                .boxed()
+                .range(0, array.length) // здесь создаеться поток примитивов инт
+                .boxed() //нужен для того что Collectors работает только с объектами Integer
                 .collect(Collectors.toMap(
                         i -> i,
                         i -> array[i]
