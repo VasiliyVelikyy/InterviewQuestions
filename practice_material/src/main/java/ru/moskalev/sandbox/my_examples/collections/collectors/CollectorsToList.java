@@ -1,4 +1,4 @@
-package ru.moskalev.sandbox.my_examples.stream.collectors;
+package ru.moskalev.sandbox.my_examples.collections.collectors;
 
 import java.util.ArrayList;
 import java.util.List;
