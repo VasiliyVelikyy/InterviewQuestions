@@ -1,16 +1,19 @@
-package ru.moskalev.sandbox.my_examples.multithreading;
+package ru.moskalev.sandbox.my_examples.multithreading.wait;
 
 import java.util.Objects;
 
 public class WaitExample {
     public String propertyOne;
     public int propertyTwo;
+
     public static void main(String[] args) {
         Object obj = new Object();
-        try {
-            obj.wait();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        synchronized (obj) {
+            try {
+                obj.wait();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         WaitExample waitExample = new WaitExample();
 

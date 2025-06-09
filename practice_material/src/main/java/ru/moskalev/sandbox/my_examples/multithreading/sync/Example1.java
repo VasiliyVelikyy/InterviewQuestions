@@ -21,8 +21,8 @@ class Example1 {
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println("Добавляем покупателя" + i);
                 names.add("Имя номер " + i);
+                System.out.println("Добавляем покупателя" + i);
             }
         }).start();
 

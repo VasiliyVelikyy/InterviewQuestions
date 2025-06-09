@@ -13,7 +13,7 @@ class Example2 {
         //Поток-потребитель:
         new Thread(() -> {
             for (int i = 0; i < 10; i++) {
-                synchronized (lock) {
+                synchronized (lock) {//вместо lock можно использовать names
                     if (!names.isEmpty()) {
                         System.out.println("Обслужили покупателя " + names.remove(0));
                     } else {
